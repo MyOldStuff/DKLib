@@ -1,7 +1,12 @@
 #################
 ## General
 #################
+
 /target
+.gitattributes
+.gitignore
+DKLib.iml
+dependency-reduced-pom.xml
 
 #################
 ## Eclipse
