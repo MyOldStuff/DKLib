@@ -16,7 +16,7 @@ public class TestListener implements Listener
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
-        Bukkit.broadcastMessage("TÄÄSCHD!");
+        Bukkit.broadcastMessage("TÄÄSCHD!!!");
     }
 
 }
