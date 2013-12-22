@@ -1,0 +1,10 @@
+name: DKLibTtest
+version: 1.0.0
+authors: [michidk]
+
+main: me.michidk.DKLib.Test.Main
+
+commands:
+  DKLibTest:
+    description: test someshiat in my liab
+    aliases: [dkt]
