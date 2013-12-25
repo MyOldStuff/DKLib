@@ -2,7 +2,11 @@ package me.michidk.DKLib.Command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,123 +14,116 @@ import java.util.List;
  * Date: 25.12.13
  * Time: 15:12
  */
-public class SimpleCommand extends Command
+public abstract class SimpleCommand extends Command
 {
 
     /**
      * Creates a new command
      *
-     * @param name          the name of the command /name
+     * @param name              the name of the command /name
      */
     public SimpleCommand(String name)
     {
-        super(name);
+        super(name, "", "/" + name, new ArrayList<String>());
     }
 
     /**
      * Creates a new command
      *
-     * @param name          the name e.g. /name
-     * @param description   the description
+     * @param name              the name e.g. /name
+     * @param description       the description
      */
     public SimpleCommand(String name, String description)
     {
-        super(name);
-        this.setDescription(description);
+        super(name, description, "/" + name, new ArrayList<String>());
     }
 
     /**
      * Creates a new Command
      *
-     * @param name          the name e.g. /name
-     * @param aliases       the aliases e.g. /alias
+     * @param name              the name e.g. /name
+     * @param aliases           the aliases e.g. /alias
      */
     public SimpleCommand(String name, String ... aliases)
     {
-        super(name);
-
-        for (String alias:aliases)
-        {
-            this.getAliases().add(alias);
-        }
-
+        super(name, "", "/" + name, Arrays.asList(aliases));
     }
 
     /**
      * Creates a new Command
      *
-     * @param name          the name e.g. /name
-     * @param description   the description
-     * @param aliases       the aliases e.g. /alias
-     */
-    public SimpleCommand(String name, String description, String ... aliases)
-    {
-        super(name);
-
-        this.setDescription(description);
-
-        for (String alias:aliases)
-        {
-            this.getAliases().add(alias);
-        }
-    }
-
-    /**
-     * Creates a new Command
-     *
-     * @param name          the name e.g. /name
-     * @param description   the description
-     * @param usageMessage  appears if return false
+     * @param name              the name e.g. /name
+     * @param description       the description
+     * @param usageMessage      appears if return false
      */
     public SimpleCommand(String name, String description, String usageMessage)
     {
-        super(name);
-
-        this.setDescription(description);
-
-        this.setUsage(usageMessage);
+        super(name, description, usageMessage, new ArrayList<String>());
     }
 
     /**
      * Creates a new Command
      *
-     * @param name          the name e.g. /name
-     * @param description   the description
-     * @param usageMessage  appears if return false
-     * @param aliases       the aliases e.g. /alias
+     * @param name              the name e.g. /name
+     * @param description       the description
+     * @param aliases           the aliases e.g. /alias
      */
-    public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
+    public SimpleCommand(String name, String description, String ... aliases)
     {
-        super(name);
-
-        this.setDescription(description);
-
-        this.setUsage(usageMessage);
-
-        for (String alias:aliases)
-        {
-            this.getAliases().add(alias);
-        }
+        super(name, description, "/" + name, Arrays.asList(aliases));
     }
 
     /**
-     * will execute if the command is called
+     * Creates a new Command
      *
-     * @param sender        the sender that called the command
-     * @param name          the name of the command
-     * @param args          the arguments that are called with the command e.g. /name args0 args1 args2
+     * @param name              the name e.g. /name
+     * @param description       the description
+     * @param usageMessage      appears if return false
+     * @param aliases           the aliases e.g. /alias
+     */
+    public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
+    {
+        super(name, description, usageMessage, Arrays.asList(aliases));
+    }
+
+    /**
+     * will execute when the command is called
+     * calls the onPlayerCommand if the sender is a Player
+     * or the onConsoleCommand if the sender is a Console
+     *
+     * if you override execute, then onPlayerCommand and onConsoleCommand won't work
+     *
+     * @param sender            the sender that called the command
+     * @param command           the name of the command
+     * @param args              the arguments that are called with the command e.g. /name args0 args1 args2
      *
      * @return
      */
-    public boolean execute(CommandSender sender, String name, String[] args)
+    @Override
+    public boolean execute(CommandSender sender, String command, String[] args)
     {
-        return false;
+        if (sender instanceof Player)
+        {
+            return onPlayerCommand((Player) sender, command, args);
+        }
+        else if (sender instanceof ConsoleCommandSender)
+        {
+            return onConsoleCommand((ConsoleCommandSender) sender, command, args);
+        }
+        else
+        {
+            return false;
+        }
     }
+
+    public abstract boolean onPlayerCommand(Player p, String command, String[] args);
+
+    public abstract boolean onConsoleCommand(ConsoleCommandSender sender, String command, String[] args);
 
     /**
      * add an alias
      *
-     * @param alias         the alias to add
+     * @param alias             the alias to add
      */
     public void addAlias(String alias)
     {
@@ -138,7 +135,7 @@ public class SimpleCommand extends Command
     /**
      * remove an alias
      *
-     * @param alias         the alias to remove
+     * @param alias             the alias to remove
      */
     public void removeAlias(String alias)
     {
@@ -146,6 +143,5 @@ public class SimpleCommand extends Command
         aliasez.remove(alias);
         this.setAliases(aliasez);
     }
-
 
 }

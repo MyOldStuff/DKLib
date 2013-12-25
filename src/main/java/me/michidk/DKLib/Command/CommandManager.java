@@ -35,7 +35,6 @@ public class CommandManager
 
             f.setAccessible(true);
             cmap = (SimpleCommandMap)f.get(Bukkit.getServer());
-            f.setAccessible(!f.isAccessible());
 
         } catch (Exception e){
             e.printStackTrace();
