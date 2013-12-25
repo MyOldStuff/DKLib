@@ -1,0 +1,9 @@
+name: DKLib_Test
+version: 1.0.0
+authors: [michidk]
+
+main: me.michidk.DKLib.Test.Main
+
+commands:
+  test:
+    description: main command

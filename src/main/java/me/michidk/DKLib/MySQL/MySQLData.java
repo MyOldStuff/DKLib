@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.MySQL;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;

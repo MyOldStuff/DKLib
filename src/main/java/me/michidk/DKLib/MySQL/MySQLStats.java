@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.MySQL;
 
 import org.bukkit.Bukkit;
 

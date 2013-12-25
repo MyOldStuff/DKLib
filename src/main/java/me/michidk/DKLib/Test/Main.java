@@ -1,5 +1,6 @@
 package me.michidk.DKLib.Test;
 
+import me.michidk.DKLib.Command.CommandManager;
 import me.michidk.DKLib.ListenerCollection;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,12 +16,20 @@ public class Main extends JavaPlugin implements Listener
 {
 
     ListenerCollection listeners;
+    CommandManager commandManager;
 
     @Override
     public void onEnable()
     {
+
+        //listener test
         listeners = new ListenerCollection(this, new Listener[]{new TestListener()});
         listeners.addListener(this);
+
+        //command test
+        commandManager = new CommandManager();
+        commandManager.registerCommand(new TestCommand());
+
     }
 
     @Override
@@ -32,6 +41,8 @@ public class Main extends JavaPlugin implements Listener
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+
+        //listener test
         if (listeners.isEnabled())
         {
             listeners.disable();
@@ -40,6 +51,8 @@ public class Main extends JavaPlugin implements Listener
         {
             listeners.enable();
         }
+
+
 
         return true;
     }
