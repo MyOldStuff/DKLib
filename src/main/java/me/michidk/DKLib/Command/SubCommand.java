@@ -12,13 +12,13 @@ public class SubCommand implements ComplexCommandExecuter
 {
 
     @Override
-    public boolean onPlayerCommand(Player p, String command, String[] args)
+    public boolean onPlayerCommand(Player player, String command, String[] args)
     {
         return false;
     }
 
     @Override
-    public boolean onConsoleCommand(ConsoleCommandSender sender, String command, String[] args)
+    public boolean onConsoleCommand(ConsoleCommandSender console, String command, String[] args)
     {
         return false;
     }
