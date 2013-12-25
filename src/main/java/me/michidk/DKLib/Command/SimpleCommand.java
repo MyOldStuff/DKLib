@@ -14,13 +14,15 @@ import java.util.List;
  * Date: 25.12.13
  * Time: 15:12
  */
-public abstract class SimpleCommand extends Command
+public class SimpleCommand extends Command implements ComplexCommandExecuter
 {
+
+    List<SubCommand> subCommands = new ArrayList<SubCommand>();
 
     /**
      * Creates a new command
      *
-     * @param name              the name of the command /name
+     * @param name - the name of the command /name
      */
     public SimpleCommand(String name)
     {
@@ -30,8 +32,8 @@ public abstract class SimpleCommand extends Command
     /**
      * Creates a new command
      *
-     * @param name              the name e.g. /name
-     * @param description       the description
+     * @param name - the name e.g. /name
+     * @param description - the description
      */
     public SimpleCommand(String name, String description)
     {
@@ -41,45 +43,10 @@ public abstract class SimpleCommand extends Command
     /**
      * Creates a new Command
      *
-     * @param name              the name e.g. /name
-     * @param aliases           the aliases e.g. /alias
-     */
-    public SimpleCommand(String name, String ... aliases)
-    {
-        super(name, "", "/" + name, Arrays.asList(aliases));
-    }
-
-    /**
-     * Creates a new Command
-     *
-     * @param name              the name e.g. /name
-     * @param description       the description
-     * @param usageMessage      appears if return false
-     */
-    public SimpleCommand(String name, String description, String usageMessage)
-    {
-        super(name, description, usageMessage, new ArrayList<String>());
-    }
-
-    /**
-     * Creates a new Command
-     *
-     * @param name              the name e.g. /name
-     * @param description       the description
-     * @param aliases           the aliases e.g. /alias
-     */
-    public SimpleCommand(String name, String description, String ... aliases)
-    {
-        super(name, description, "/" + name, Arrays.asList(aliases));
-    }
-
-    /**
-     * Creates a new Command
-     *
-     * @param name              the name e.g. /name
-     * @param description       the description
-     * @param usageMessage      appears if return false
-     * @param aliases           the aliases e.g. /alias
+     * @param name - the name e.g. /name
+     * @param description - the description
+     * @param usageMessage - appears if return false
+     * @param aliases - the aliases in a String array e.g. /alias
      */
     public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
     {
@@ -91,11 +58,11 @@ public abstract class SimpleCommand extends Command
      * calls the onPlayerCommand if the sender is a Player
      * or the onConsoleCommand if the sender is a Console
      *
-     * if you override execute, then onPlayerCommand and onConsoleCommand won't work
+     * if you override execute(), then onPlayerCommand() and onConsoleCommand() call super().execute() or they won't work
      *
-     * @param sender            the sender that called the command
-     * @param command           the name of the command
-     * @param args              the arguments that are called with the command e.g. /name args0 args1 args2
+     * @param sender - the sender that called the command
+     * @param command - the name of the command
+     * @param args - the arguments that are called with the command e.g. /name args0 args1 args2
      *
      * @return
      */
@@ -116,14 +83,36 @@ public abstract class SimpleCommand extends Command
         }
     }
 
-    public abstract boolean onPlayerCommand(Player p, String command, String[] args);
-
-    public abstract boolean onConsoleCommand(ConsoleCommandSender sender, String command, String[] args);
+    /**
+     * called when a player performs a command
+     *
+     * @param player - the player that performed the command
+     * @param command - the name or alias of the command
+     * @param args - the args that were given
+     * @return
+     */
+    @Override
+    public boolean onPlayerCommand(Player player, String command, String[] args)
+    {
+        return false;
+    }
 
     /**
-     * add an alias
+     * called when the console performs a command
      *
-     * @param alias             the alias to add
+     * @param console - the console that performed the command
+     * @param command - the name or alias of the command
+     * @param args - the args that were given
+     * @return
+     */
+    @Override
+    public boolean onConsoleCommand(ConsoleCommandSender console, String command, String[] args)
+    {
+        return false;
+    }
+
+    /**
+     * @param alias - register the alias
      */
     public void addAlias(String alias)
     {
@@ -133,9 +122,7 @@ public abstract class SimpleCommand extends Command
     }
 
     /**
-     * remove an alias
-     *
-     * @param alias             the alias to remove
+     * @param alias - remove the alias
      */
     public void removeAlias(String alias)
     {
@@ -143,5 +130,25 @@ public abstract class SimpleCommand extends Command
         aliasez.remove(alias);
         this.setAliases(aliasez);
     }
+
+    /**
+     * register a subcommand
+     *
+     * @param subCommand - the subcommand to register
+     */
+    public void addSubCommand(SubCommand subCommand)
+    {
+        subCommands.add(subCommand);
+    }
+
+    /**
+     * @return - a list filled with all subcommands
+     */
+    public List<SubCommand> getSubCommands()
+    {
+        return subCommands;
+    }
+
+
 
 }
