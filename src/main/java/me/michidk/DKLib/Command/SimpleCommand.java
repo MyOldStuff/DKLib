@@ -73,32 +73,55 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     public boolean execute(CommandSender sender, String command, String[] args)
     {
         boolean succees = false;
+
+        //execute onCommands
+        if (onCommand(sender, command, args))
+            succees = true;
+
         if (sender instanceof Player)
         {
-            succees = onPlayerCommand((Player) sender, command, args);
+            if (onPlayerCommand((Player) sender, command, args))
+                succees = true;
         }
         else if (sender instanceof ConsoleCommandSender)
         {
-            succees = onConsoleCommand((ConsoleCommandSender) sender, command, args);
+            if (onConsoleCommand((ConsoleCommandSender) sender, command, args))
+                succees = true;
         }
         else
         {
             succees = false;
         }
 
+        //print usage
         if (succees == false)
         {
             sender.sendMessage("§cCorrect usage: §f" + usageMessage);
             return false;
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
+
     }
 
     /**
      * called when a player performs a command
+     * use only if you dont use onPlayerCommand and onConsoleCommand
+     *
+     * @param sender - the sender that performed the command
+     * @param command - the name or alias of the command
+     * @param args - the args that were given
+     * @return
+     */
+    @Override
+    public boolean onCommand(CommandSender sender, String command, String[] args)
+    {
+        return false;
+    }
+
+    /**
+     * called when a player performs a command
+     * use it only if you don't use onCommand
      *
      * @param player - the player that performed the command
      * @param command - the name or alias of the command
@@ -113,6 +136,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
 
     /**
      * called when the console performs a command
+     * use it only if you don't use onCommand
      *
      * @param console - the console that performed the command
      * @param command - the name or alias of the command

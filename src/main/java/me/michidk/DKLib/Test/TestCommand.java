@@ -1,7 +1,6 @@
 package me.michidk.DKLib.Test;
 
 import me.michidk.DKLib.Command.SimpleCommand;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,27 +19,45 @@ public class TestCommand extends SimpleCommand
         this.addAlias("kuchen");
     }
 
+    /*
     //you don't need that
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings)
     {
         super.execute(commandSender, s, strings);
-        commandSender.sendMessage("this will be called if player and console execute the command");
+        //commandSender.sendMessage("this will be called if player and console execute the command");
         return false;
     }
+    */
+
+    /*
+    @Override
+    public boolean onCommand(CommandSender sender, String command, String[] args)
+    {
+        sender.sendMessage("abc");
+        return false;
+    }
+    */
 
     @Override
-    public boolean onPlayerCommand(Player p, String s, String[] strings)
+    public boolean onPlayerCommand(Player p, String command, String[] args)
     {
         p.sendMessage("§4OMFG it works");
-        return false;
+
+        if (args.length < 1)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
-    public boolean onConsoleCommand(ConsoleCommandSender sender, String s, String[] strings)
+    public boolean onConsoleCommand(ConsoleCommandSender sender, String command, String[] args)
     {
         sender.sendMessage("only ingame");
         return true;
     }
+
 
 }

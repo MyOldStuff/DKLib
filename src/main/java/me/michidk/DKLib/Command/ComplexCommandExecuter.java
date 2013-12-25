@@ -1,5 +1,6 @@
 package me.michidk.DKLib.Command;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
  */
 public interface ComplexCommandExecuter
 {
+    public boolean onCommand(CommandSender sender, String command, String[] args);
 
     public boolean onPlayerCommand(Player p, String command, String[] args);
 

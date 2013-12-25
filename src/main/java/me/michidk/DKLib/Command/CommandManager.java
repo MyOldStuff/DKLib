@@ -26,7 +26,7 @@ public class CommandManager
     /**
      * init the CommandManager
      * with
-     * new CommandManager();
+     * new CommandManager(this);
      */
     public CommandManager(Plugin plugin)
     {

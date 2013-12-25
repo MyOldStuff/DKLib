@@ -1,5 +1,6 @@
 package me.michidk.DKLib.Command;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,8 +15,20 @@ public class SubCommand implements ComplexCommandExecuter
     private String name;
     private String description;
     private String usage;
-    private boolean includeInHelp = true;
+    private boolean includeIntoHelp = true;
 
+    public SubCommand(String name, String description, String usage)
+    {
+        this.name = name;
+        this.description = description;
+        this.usage = usage;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String command, String[] args)
+    {
+        return false;
+    }
 
     @Override
     public boolean onPlayerCommand(Player player, String command, String[] args)
