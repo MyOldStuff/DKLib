@@ -20,12 +20,12 @@ public class TestCommand extends SimpleCommand
         this.addAlias("kuchen");
     }
 
-    //dont du this
+    //you don't need that
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings)
     {
         super.execute(commandSender, s, strings);
-        commandSender.sendMessage("HII!!!!");
+        commandSender.sendMessage("this will be called if player and console execute the command");
         return false;
     }
 

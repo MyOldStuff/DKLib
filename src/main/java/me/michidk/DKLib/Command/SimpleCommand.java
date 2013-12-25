@@ -3,7 +3,9 @@ package me.michidk.DKLib.Command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +16,11 @@ import java.util.List;
  * Date: 25.12.13
  * Time: 15:12
  */
-public class SimpleCommand extends Command implements ComplexCommandExecuter
+public class SimpleCommand extends Command implements PluginIdentifiableCommand, ComplexCommandExecuter
 {
 
-    List<SubCommand> subCommands = new ArrayList<SubCommand>();
+    private Plugin plugin;
+    private List<SubCommand> subCommands = new ArrayList<SubCommand>();
 
     /**
      * Creates a new command
@@ -149,6 +152,17 @@ public class SimpleCommand extends Command implements ComplexCommandExecuter
         return subCommands;
     }
 
+    protected void setPlugin(Plugin plugin)
+    {
+        this.plugin = plugin;
+    }
 
-
+    /**
+     * @return - the plugin that registered that command
+     */
+    @Override
+    public Plugin getPlugin()
+    {
+        return plugin;
+    }
 }

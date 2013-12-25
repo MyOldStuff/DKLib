@@ -27,7 +27,7 @@ public class Main extends JavaPlugin implements Listener
         listeners.addListener(this);
 
         //command test
-        commandManager = new CommandManager();
+        commandManager = new CommandManager(this);
         commandManager.registerCommand(new TestCommand());
 
     }

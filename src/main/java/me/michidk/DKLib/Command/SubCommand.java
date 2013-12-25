@@ -11,6 +11,11 @@ import org.bukkit.entity.Player;
 public class SubCommand implements ComplexCommandExecuter
 {
 
+    private String name;
+    private String description;
+    private boolean includeInHelp = true;
+
+
     @Override
     public boolean onPlayerCommand(Player player, String command, String[] args)
     {
@@ -22,4 +27,5 @@ public class SubCommand implements ComplexCommandExecuter
     {
         return false;
     }
+
 }

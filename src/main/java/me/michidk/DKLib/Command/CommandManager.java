@@ -2,6 +2,7 @@ package me.michidk.DKLib.Command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 public class CommandManager
 {
 
+    private Plugin plugin;
+
     private static SimpleCommandMap cmap;
 
     private List<SimpleCommand> list = new ArrayList<SimpleCommand>();
@@ -25,8 +28,10 @@ public class CommandManager
      * with
      * new CommandManager();
      */
-    public CommandManager()
+    public CommandManager(Plugin plugin)
     {
+
+        this.plugin = plugin;
 
         //get commandMap from CraftServer
         try{
@@ -49,6 +54,7 @@ public class CommandManager
      */
     public void registerCommand(SimpleCommand command)
     {
+        command.setPlugin(plugin);
         cmap.register("", command);
         list.add(command);
     }
