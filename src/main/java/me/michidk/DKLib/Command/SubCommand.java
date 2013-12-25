@@ -13,6 +13,7 @@ public class SubCommand implements ComplexCommandExecuter
 
     private String name;
     private String description;
+    private String usage;
     private boolean includeInHelp = true;
 
 

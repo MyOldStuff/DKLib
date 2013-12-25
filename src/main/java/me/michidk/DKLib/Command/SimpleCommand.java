@@ -72,17 +72,28 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     @Override
     public boolean execute(CommandSender sender, String command, String[] args)
     {
+        boolean succees = false;
         if (sender instanceof Player)
         {
-            return onPlayerCommand((Player) sender, command, args);
+            succees = onPlayerCommand((Player) sender, command, args);
         }
         else if (sender instanceof ConsoleCommandSender)
         {
-            return onConsoleCommand((ConsoleCommandSender) sender, command, args);
+            succees = onConsoleCommand((ConsoleCommandSender) sender, command, args);
         }
         else
         {
+            succees = false;
+        }
+
+        if (succees == false)
+        {
+            sender.sendMessage("§cCorrect usage: §f" + usageMessage);
             return false;
+        }
+        else
+        {
+            return true;
         }
     }
 

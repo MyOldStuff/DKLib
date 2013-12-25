@@ -15,8 +15,8 @@ public class TestCommand extends SimpleCommand
 
     public TestCommand()
     {
-        super("abc", "desc", "usage", new String[] {"aAlias", "anotherAlias"});
-        this.addAlias("alias");
+        super("test", "description", "/test <whatever>", new String[] {"aAlias", "anotherAlias"});
+        this.addAlias("alsoAnAlias");
         this.addAlias("kuchen");
     }
 
