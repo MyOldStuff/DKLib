@@ -17,7 +17,6 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
 {
 
     private Plugin plugin;
-    private List<SubCommand> subCommands = new ArrayList<SubCommand>();
 
     /**
      * Creates a new command
@@ -63,55 +62,6 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     @Override
     public boolean execute(CommandSender sender, String command, String[] args)
     {
-
-        //subcommand handling
-        if (args.length >= 1 && subCommands.size() >= 1)
-        {
-            for (SubCommand sc:subCommands)
-            {
-                if (args[0].equalsIgnoreCase(sc.getName()))
-                {
-
-                    //permission handling
-                    if (sc.getPermission() != null && !sender.hasPermission(sc.getPermission()))
-                    {
-                        sender.sendMessage(getPermissionMessage());
-                        return true;
-                    }
-
-                    boolean subsuccees = false;
-
-                    //execute onCommands
-                    if (sc.onCommand(sender, command, args))
-                        subsuccees = true;
-
-                    if (sender instanceof Player)
-                    {
-                        if (sc.onPlayerCommand((Player) sender, command, args))
-                            subsuccees = true;
-                    }
-                    else if (sender instanceof ConsoleCommandSender)
-                    {
-                        if (sc.onConsoleCommand((ConsoleCommandSender) sender, command, args))
-                            subsuccees = true;
-                    }
-                    else
-                    {
-                        subsuccees = false;
-                    }
-
-                    //print usage
-                    if (subsuccees == false)
-                    {
-                        sender.sendMessage(CommandManager.USAGE_MESSAGE + usageMessage);
-                        return false;
-                    }
-
-                    return true;
-                }
-            }
-
-        }
 
         //permissions handling
         if (getPermission() != null && !sender.hasPermission(getPermission()))
@@ -197,24 +147,6 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
         List<String> aliasez = this.getAliases();
         aliasez.remove(alias);
         this.setAliases(aliasez);
-    }
-
-    /**
-     * register a subcommand
-     *
-     * @param subCommand - the subcommand to register
-     */
-    public void addSubCommand(SubCommand subCommand)
-    {
-        subCommands.add(subCommand);
-    }
-
-    /**
-     * @return - a list filled with all subcommands
-     */
-    public List<SubCommand> getSubCommands()
-    {
-        return subCommands;
     }
 
     protected void setPlugin(Plugin plugin)

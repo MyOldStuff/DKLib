@@ -19,9 +19,6 @@ public class TestCommand extends SimpleCommand
         //adding more aliases
         this.addAlias("alsoAnAlias");
         this.addAlias("kuchen");
-
-        //adding subcommands
-        this.addSubCommand(new SpecialSubCommand());
     }
 
     /*
