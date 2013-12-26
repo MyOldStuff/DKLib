@@ -24,6 +24,12 @@ public class CommandManager
     private List<SimpleCommand> list = new ArrayList<SimpleCommand>();
 
     /**
+     * feel free to change the messages
+     */
+    public static String USAGE_MESSAGE = "§cCorrect usage: §f";
+    public static String NOPERMS_MESSAGE = "§4You don't have permissions to perform that command!";
+
+    /**
      * init the CommandManager
      * with
      * new CommandManager(this);

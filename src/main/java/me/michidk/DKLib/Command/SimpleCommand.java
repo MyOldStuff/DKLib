@@ -30,6 +30,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     public SimpleCommand(String name)
     {
         super(name, "", "/" + name, new ArrayList<String>());
+        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
     }
 
     /**
@@ -41,6 +42,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     public SimpleCommand(String name, String description)
     {
         super(name, description, "/" + name, new ArrayList<String>());
+        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
     }
 
     /**
@@ -54,11 +56,12 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
     {
         super(name, description, usageMessage, Arrays.asList(aliases));
+        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
     }
 
     /**
-     * DON'T OVERRIDE IT!
-     * OR YOU WILL FUCK THE SYSTEM!
+     * D0N'T 0V3RRID3 IT!
+     * 0R Y0U WILL FUCK THE SYST3M!
      */
     @Override
     public boolean execute(CommandSender sender, String command, String[] args)
@@ -71,6 +74,14 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
             {
                 if (args[0].equalsIgnoreCase(sc.getName()))
                 {
+
+                    //permission handling
+                    if (sc.getPermission() != null && !sender.hasPermission(sc.getPermission()))
+                    {
+                        sender.sendMessage(getPermissionMessage());
+                        return true;
+                    }
+
                     boolean subsuccees = false;
 
                     //execute onCommands
@@ -95,7 +106,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
                     //print usage
                     if (subsuccees == false)
                     {
-                        sender.sendMessage("§cCorrect usage: §f" + usageMessage);
+                        sender.sendMessage(CommandManager.USAGE_MESSAGE + usageMessage);
                         return false;
                     }
 
@@ -103,6 +114,13 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
                 }
             }
 
+        }
+
+        //permissions handling
+        if (getPermission() != null && !sender.hasPermission(getPermission()))
+        {
+            sender.sendMessage(getPermissionMessage());
+            return true;
         }
 
         boolean succees = false;
@@ -129,7 +147,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
         //print usage
         if (succees == false)
         {
-            sender.sendMessage("§cCorrect usage: §f" + usageMessage);
+            sender.sendMessage(CommandManager.USAGE_MESSAGE + usageMessage);
             return false;
         }
 
@@ -215,4 +233,5 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     {
         return plugin;
     }
+
 }

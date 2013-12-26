@@ -14,6 +14,9 @@ public class SpecialSubCommand extends SubCommand
     public SpecialSubCommand()
     {
         super("nameOfSub", "simple test subcommand", "subcommand <value>");
+
+        //set permission
+        this.setPermission("puste.kuchen");
     }
 
     @Override

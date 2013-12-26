@@ -15,6 +15,7 @@ public class SubCommand implements ComplexCommandExecuter
     private String name;
     private String description;
     private String usage;
+    private String permission;
     private boolean includeIntoHelp = true;
 
     public SubCommand(String name, String description, String usage)
@@ -65,6 +66,16 @@ public class SubCommand implements ComplexCommandExecuter
     public void setUsage(String usage)
     {
         this.usage = usage;
+    }
+
+    public String getPermission()
+    {
+        return permission;
+    }
+
+    public void setPermission(String permission)
+    {
+        this.permission = permission;
     }
 
     public boolean isIncludeIntoHelp()
