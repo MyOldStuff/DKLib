@@ -1,6 +1,9 @@
 package me.michidk.DKLib.Command;
 
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -95,7 +98,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
         if (succees == false)
         {
             sender.sendMessage(CommandManager.USAGE_MESSAGE + usageMessage);
-            return false;
+            return true;
         }
 
         return true;
