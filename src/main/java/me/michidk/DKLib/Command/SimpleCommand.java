@@ -1,9 +1,6 @@
 package me.michidk.DKLib.Command;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginIdentifiableCommand;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,7 +22,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     /**
      * Creates a new command
      *
-     * @param name - the name of the command /name
+     * @param name          the name of the command /name
      */
     public SimpleCommand(String name)
     {
@@ -36,8 +33,8 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     /**
      * Creates a new command
      *
-     * @param name - the name e.g. /name
-     * @param description - the description
+     * @param name          the name e.g. /name
+     * @param description   the description
      */
     public SimpleCommand(String name, String description)
     {
@@ -48,10 +45,10 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     /**
      * Creates a new Command
      *
-     * @param name - the name e.g. /name
-     * @param description - the description
-     * @param usageMessage - appears if return false
-     * @param aliases - the aliases in a String array e.g. /alias
+     * @param name          the name e.g. /name
+     * @param description   the description
+     * @param usageMessage  appears if return false
+     * @param aliases       the aliases in a String array e.g. /alias
      */
     public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
     {
