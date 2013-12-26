@@ -57,21 +57,54 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     }
 
     /**
-     * will execute when the command is called
-     * calls the onPlayerCommand if the sender is a Player
-     * or the onConsoleCommand if the sender is a Console
-     *
-     * if you override execute(), then onPlayerCommand() and onConsoleCommand() call super().execute() or they won't work
-     *
-     * @param sender - the sender that called the command
-     * @param command - the name of the command
-     * @param args - the arguments that are called with the command e.g. /name args0 args1 args2
-     *
-     * @return
+     * DON'T OVERRIDE IT!
+     * OR YOU WILL FUCK THE SYSTEM!
      */
     @Override
     public boolean execute(CommandSender sender, String command, String[] args)
     {
+
+        //subcommand handling
+        if (args.length >= 1 && subCommands.size() >= 1)
+        {
+            for (SubCommand sc:subCommands)
+            {
+                if (args[0].equalsIgnoreCase(sc.getName()))
+                {
+                    boolean subsuccees = false;
+
+                    //execute onCommands
+                    if (sc.onCommand(sender, command, args))
+                        subsuccees = true;
+
+                    if (sender instanceof Player)
+                    {
+                        if (sc.onPlayerCommand((Player) sender, command, args))
+                            subsuccees = true;
+                    }
+                    else if (sender instanceof ConsoleCommandSender)
+                    {
+                        if (sc.onConsoleCommand((ConsoleCommandSender) sender, command, args))
+                            subsuccees = true;
+                    }
+                    else
+                    {
+                        subsuccees = false;
+                    }
+
+                    //print usage
+                    if (subsuccees == false)
+                    {
+                        sender.sendMessage("§cCorrect usage: §f" + usageMessage);
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+
+        }
+
         boolean succees = false;
 
         //execute onCommands
@@ -105,13 +138,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     }
 
     /**
-     * called when a player performs a command
-     * use only if you dont use onPlayerCommand and onConsoleCommand
-     *
-     * @param sender - the sender that performed the command
-     * @param command - the name or alias of the command
-     * @param args - the args that were given
-     * @return
+     * look at ComplexCommandExecuter Interface
      */
     @Override
     public boolean onCommand(CommandSender sender, String command, String[] args)
@@ -120,13 +147,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     }
 
     /**
-     * called when a player performs a command
-     * use it only if you don't use onCommand
-     *
-     * @param player - the player that performed the command
-     * @param command - the name or alias of the command
-     * @param args - the args that were given
-     * @return
+     * look at ComplexCommandExecuter Interface
      */
     @Override
     public boolean onPlayerCommand(Player player, String command, String[] args)
@@ -135,13 +156,7 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     }
 
     /**
-     * called when the console performs a command
-     * use it only if you don't use onCommand
-     *
-     * @param console - the console that performed the command
-     * @param command - the name or alias of the command
-     * @param args - the args that were given
-     * @return
+     * look at ComplexCommandExecuter Interface
      */
     @Override
     public boolean onConsoleCommand(ConsoleCommandSender console, String command, String[] args)

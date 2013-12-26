@@ -15,8 +15,13 @@ public class TestCommand extends SimpleCommand
     public TestCommand()
     {
         super("test", "description", "/test <whatever>", new String[] {"aAlias", "anotherAlias"});
+
+        //adding more aliases
         this.addAlias("alsoAnAlias");
         this.addAlias("kuchen");
+
+        //adding subcommands
+        this.addSubCommand(new SpecialSubCommand());
     }
 
     /*

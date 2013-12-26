@@ -42,4 +42,39 @@ public class SubCommand implements ComplexCommandExecuter
         return false;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public String getUsage()
+    {
+        return usage;
+    }
+
+    public void setUsage(String usage)
+    {
+        this.usage = usage;
+    }
+
+    public boolean isIncludeIntoHelp()
+    {
+        return includeIntoHelp;
+    }
+
+    public void setIncludeIntoHelp(boolean includeIntoHelp)
+    {
+        this.includeIntoHelp = includeIntoHelp;
+    }
+
 }
