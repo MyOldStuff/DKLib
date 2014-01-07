@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 25.12.13
  * Time: 15:12
  */
-public class SimpleCommand extends Command implements CommandExecutable, PluginIdentifiableCommand, CommandInfo
+public abstract class SimpleCommand extends Command implements CommandExecutable, PluginIdentifiableCommand, CommandInfo
 {
 
     private Plugin plugin;
@@ -146,10 +146,7 @@ public class SimpleCommand extends Command implements CommandExecutable, PluginI
      * see {@link CommandExecutable}
      */
     @Override
-    public boolean onCommand(CommandSender sender, String command, String[] args)
-    {
-        return false;
-    }
+    public abstract boolean onCommand(CommandSender sender, String command, String[] args);
 
     /**
      * @param alias - register the alias
