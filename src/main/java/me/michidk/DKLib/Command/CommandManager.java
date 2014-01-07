@@ -21,13 +21,17 @@ public class CommandManager
 
     private static SimpleCommandMap cmap;
 
-    private List<SimpleCommand> list = new ArrayList<SimpleCommand>();
+    private static List<CommandManager> list = new ArrayList<CommandManager>();
+    private List<SimpleCommand> commandList = new ArrayList<SimpleCommand>();
+
 
     /**
-     * feel free to change the messages
+     * feel free to change the messages with new CommandManager.MESSAGE = "";
      */
-    public static String USAGE_MESSAGE = "§cCorrect usage: §f";
-    public static String NOPERMS_MESSAGE = "§4You don't have permissions to perform that command!";
+    public String PREFIX = "";
+    public String USAGE_MESSAGE = "§cCorrect usage: §f";
+    public String NOPERMS_MESSAGE = "§cYou need the permission §f\"§6<permission>§f\" §cto perform this command!";
+    public String ONLYINGAME_MESSAGE = "You can only perform this command ingame.";
 
     /**
      * init the CommandManager
@@ -38,19 +42,19 @@ public class CommandManager
     {
 
         this.plugin = plugin;
+        list.add(this);
 
         //get commandMap from CraftServer
         try{
 
             final Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-
             f.setAccessible(true);
+
             cmap = (SimpleCommandMap)f.get(Bukkit.getServer());
 
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -60,9 +64,8 @@ public class CommandManager
      */
     public void registerCommand(SimpleCommand command)
     {
-        command.setPlugin(plugin);
         cmap.register("", command);
-        list.add(command);
+        commandList.add(command);
     }
 
     /**
@@ -93,6 +96,16 @@ public class CommandManager
      * @return              all, in this manager, registered commands
      */
     public List<SimpleCommand> getCommands()
+    {
+        return commandList;
+    }
+
+    public Plugin getPlugin()
+    {
+        return plugin;
+    }
+
+    public static List<CommandManager> getCommandManagers()
     {
         return list;
     }

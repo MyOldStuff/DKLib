@@ -28,7 +28,8 @@ public class Main extends JavaPlugin implements Listener
 
         //command test
         commandManager = new CommandManager(this);
-        commandManager.registerCommand(new TestCommand());
+        commandManager.registerCommand(new TestCommand(commandManager));
+        commandManager.PREFIX = "§f[§4TEST§f] ";
 
     }
 

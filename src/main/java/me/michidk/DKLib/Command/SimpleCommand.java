@@ -1,14 +1,14 @@
 package me.michidk.DKLib.Command;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,46 +16,80 @@ import java.util.List;
  * Date: 25.12.13
  * Time: 15:12
  */
-public class SimpleCommand extends Command implements PluginIdentifiableCommand, ComplexCommandExecuter
+public class SimpleCommand extends Command implements CommandExecutable, PluginIdentifiableCommand, CommandInfo
 {
 
     private Plugin plugin;
+    private CommandManager commandManager;
 
-    /**
-     * Creates a new command
-     *
-     * @param name          the name of the command /name
-     */
-    public SimpleCommand(String name)
-    {
-        super(name, "", "/" + name, new ArrayList<String>());
-        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
-    }
+    private boolean onlyIngame;
 
-    /**
-     * Creates a new command
-     *
-     * @param name          the name e.g. /name
-     * @param description   the description
-     */
-    public SimpleCommand(String name, String description)
+    public SimpleCommand(CommandManager commandManager, String name)
     {
-        super(name, description, "/" + name, new ArrayList<String>());
-        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
-    }
+        super(name);
 
-    /**
-     * Creates a new Command
-     *
-     * @param name          the name e.g. /name
-     * @param description   the description
-     * @param usageMessage  appears if return false
-     * @param aliases       the aliases in a String array e.g. /alias
-     */
-    public SimpleCommand(String name, String description, String usageMessage, String ... aliases)
-    {
-        super(name, description, usageMessage, Arrays.asList(aliases));
-        this.setPermissionMessage(CommandManager.NOPERMS_MESSAGE);
+
+        //link commandmanager
+        this.commandManager = commandManager;
+        /*      //dont work, need plugin before constructur
+        for (CommandManager cm:CommandManager.getCommandManagers())
+        {
+            for (SimpleCommand sc:cm.getCommands())
+            {
+                if (sc.equals(this))
+                {
+                    commandManager = cm;
+                }
+            }
+        }
+        */
+
+        if (commandManager == null)
+        {
+            try
+            {
+                throw new RegisterCommandException("failed to register the command " + name);
+            }
+            catch (RegisterCommandException e)
+            {
+                e.printStackTrace();
+            }
+
+            return;
+        }
+
+
+        //link plugin
+        plugin = this.commandManager.getPlugin();
+
+
+        //test for annotation
+        if(!this.getClass().isAnnotationPresent(CommandInfo.class))
+        {
+            try
+            {
+                throw new InvalidAnnotationException("no annotations found");
+            }
+            catch (InvalidAnnotationException e)
+            {
+                e.printStackTrace();
+            }
+
+            return;
+        }
+
+
+        //set infos
+        this.setDescription(description());
+        this.setUsage(commandManager.PREFIX + commandManager.USAGE_MESSAGE + usage());
+        this.setPermission(permission());
+        this.setPermissionMessage(commandManager.PREFIX + commandManager.NOPERMS_MESSAGE);
+        this.setOnlyIngame(onlyIngame());
+
+
+        //debug
+        //Bukkit.broadcastMessage(name + " - " + description() + " - " + usage() + " - " + permission() + " - " + getPermissionMessage() + " - " + onlyIngame());
+
     }
 
     /**
@@ -65,69 +99,54 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     @Override
     public boolean execute(CommandSender sender, String command, String[] args)
     {
+        //was our command succeesfully executed?
+        boolean success = false;
 
-        //permissions handling
-        if (getPermission() != null && !sender.hasPermission(getPermission()))
-        {
-            sender.sendMessage(getPermissionMessage());
+        //check if plugin is enabled
+        if (!plugin.isEnabled()) {
+            try {
+                throw new CommandException("Unhandled exception while executing command " + command + "in plugin " + plugin.getDescription().getFullName() + ": plugin is not enabled!");
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        //handle permission
+        if (!testPermission(sender)) {
             return true;
         }
 
-        boolean succees = false;
 
-        //execute onCommands
-        if (onCommand(sender, command, args))
-            succees = true;
-
-        if (sender instanceof Player)
+        //is ingame?
+        if (onlyIngame() == true && !(sender instanceof Player))
         {
-            if (onPlayerCommand((Player) sender, command, args))
-                succees = true;
-        }
-        else if (sender instanceof ConsoleCommandSender)
-        {
-            if (onConsoleCommand((ConsoleCommandSender) sender, command, args))
-                succees = true;
-        }
-        else
-        {
-            succees = false;
-        }
-
-        //print usage
-        if (succees == false)
-        {
-            sender.sendMessage(CommandManager.USAGE_MESSAGE + usageMessage);
+            sender.sendMessage(commandManager.PREFIX + commandManager.ONLYINGAME_MESSAGE);
             return true;
         }
 
-        return true;
+        /**
+         * from {@link org.bukkit.command.PluginCommand}
+         */
+        try {
+            success = onCommand(sender, command, args);
+        } catch (Throwable ex) {
+            throw new CommandException("Unhandled exception executing command '" + command + "' in plugin " + plugin.getDescription().getFullName(), ex);
+        }
 
+        if (!success && usageMessage.length() > 0) {
+            for (String line : usageMessage.replace("<command>", command).split("\n")) {
+                sender.sendMessage(line);
+            }
+        }
+
+        return success;
     }
 
     /**
-     * look at ComplexCommandExecuter Interface
+     * see {@link CommandExecutable}
      */
     @Override
     public boolean onCommand(CommandSender sender, String command, String[] args)
-    {
-        return false;
-    }
-
-    /**
-     * look at ComplexCommandExecuter Interface
-     */
-    @Override
-    public boolean onPlayerCommand(Player player, String command, String[] args)
-    {
-        return false;
-    }
-
-    /**
-     * look at ComplexCommandExecuter Interface
-     */
-    @Override
-    public boolean onConsoleCommand(ConsoleCommandSender console, String command, String[] args)
     {
         return false;
     }
@@ -143,6 +162,19 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
     }
 
     /**
+     * @param aliases - register aliases
+     */
+    public void addAliases(String... aliases)
+    {
+        List<String> aliasez = this.getAliases();
+        for (String alias:aliases)
+        {
+            aliasez.add(alias);
+        }
+        this.setAliases(aliasez);
+    }
+
+    /**
      * @param alias - remove the alias
      */
     public void removeAlias(String alias)
@@ -152,13 +184,32 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
         this.setAliases(aliasez);
     }
 
+    /**
+     * removes all aliases
+     */
+    public void removeAliases()
+    {
+        List<String> aliasez = new ArrayList<String>();
+        this.setAliases(aliasez);
+    }
+
+    public boolean isOnlyIngame()
+    {
+        return onlyIngame;
+    }
+
+    public void setOnlyIngame(boolean onlyIngame)
+    {
+        this.onlyIngame = onlyIngame;
+    }
+
     protected void setPlugin(Plugin plugin)
     {
         this.plugin = plugin;
     }
 
     /**
-     * @return - the plugin that registered that command
+     * @return          the plugin that registered the command
      */
     @Override
     public Plugin getPlugin()
@@ -166,4 +217,41 @@ public class SimpleCommand extends Command implements PluginIdentifiableCommand,
         return plugin;
     }
 
+    /**
+     * @return          the annotation object
+     */
+    public CommandInfo getCommandInfo()
+    {
+        return (CommandInfo) this.getClass().getAnnotation(CommandInfo.class);
+    }
+
+    @Override
+    public String description()
+    {
+        return getCommandInfo().description();
+    }
+
+    @Override
+    public String usage()
+    {
+        return getCommandInfo().usage();
+    }
+
+    @Override
+    public String permission()
+    {
+        return getCommandInfo().permission();
+    }
+
+    @Override
+    public boolean onlyIngame()
+    {
+        return getCommandInfo().onlyIngame();
+    }
+
+    @Override
+    public Class<? extends Annotation> annotationType()
+    {
+        return getCommandInfo().annotationType();
+    }
 }
