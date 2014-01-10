@@ -1,4 +1,4 @@
-package me.michidk.DKLib.Command;
+package me.michidk.DKLib.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.SimpleCommandMap;
@@ -45,14 +45,17 @@ public class CommandManager
         list.add(this);
 
         //get commandMap from CraftServer
-        try{
+        try
+        {
 
             final Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             f.setAccessible(true);
 
-            cmap = (SimpleCommandMap)f.get(Bukkit.getServer());
+            cmap = (SimpleCommandMap) f.get(Bukkit.getServer());
 
-        } catch (Exception e){
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -60,7 +63,7 @@ public class CommandManager
     /**
      * register a command
      *
-     * @param command       the command
+     * @param command the command
      */
     public void registerCommand(SimpleCommand command)
     {
@@ -71,11 +74,11 @@ public class CommandManager
     /**
      * register a command-list
      *
-     * @param commands      the commandlist List<SimpleCommand>
+     * @param commands the commandlist List<SimpleCommand>
      */
     public void registerCommands(List<SimpleCommand> commands)
     {
-        for (SimpleCommand command:commands)
+        for (SimpleCommand command : commands)
         {
             registerCommand(command);
         }
@@ -84,7 +87,7 @@ public class CommandManager
     /**
      * register a command-array
      *
-     * @param commands      the command array
+     * @param commands the command array
      */
     public void registerCommands(SimpleCommand[] commands)
     {
@@ -92,8 +95,7 @@ public class CommandManager
     }
 
     /**
-     *
-     * @return              all, in this manager, registered commands
+     * @return all, in this manager, registered commands
      */
     public List<SimpleCommand> getCommands()
     {

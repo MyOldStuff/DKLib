@@ -1,8 +1,8 @@
-package me.michidk.DKLib.Test;
+package me.michidk.DKLib.test;
 
-import me.michidk.DKLib.Command.CommandInfo;
-import me.michidk.DKLib.Command.CommandManager;
-import me.michidk.DKLib.Command.SimpleCommand;
+import me.michidk.DKLib.command.CommandInfo;
+import me.michidk.DKLib.command.CommandManager;
+import me.michidk.DKLib.command.SimpleCommand;
 import org.bukkit.command.CommandSender;
 
 /**

@@ -1,4 +1,4 @@
-package me.michidk.DKLib.Command;
+package me.michidk.DKLib.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
@@ -64,7 +64,7 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
 
 
         //test for annotation
-        if(!this.getClass().isAnnotationPresent(CommandInfo.class))
+        if (!this.getClass().isAnnotationPresent(CommandInfo.class))
         {
             try
             {
@@ -103,16 +103,21 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
         boolean success = false;
 
         //check if plugin is enabled
-        if (!plugin.isEnabled()) {
-            try {
+        if (!plugin.isEnabled())
+        {
+            try
+            {
                 throw new CommandException("Unhandled exception while executing command " + command + "in plugin " + plugin.getDescription().getFullName() + ": plugin is not enabled!");
-            } catch (Throwable ex) {
+            }
+            catch (Throwable ex)
+            {
                 ex.printStackTrace();
             }
         }
 
         //handle permission
-        if (!testPermission(sender)) {
+        if (!testPermission(sender))
+        {
             return true;
         }
 
@@ -127,14 +132,19 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
         /**
          * from {@link org.bukkit.command.PluginCommand}
          */
-        try {
+        try
+        {
             success = onCommand(sender, command, args);
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex)
+        {
             throw new CommandException("Unhandled exception executing command '" + command + "' in plugin " + plugin.getDescription().getFullName(), ex);
         }
 
-        if (!success && usageMessage.length() > 0) {
-            for (String line : usageMessage.replace("<command>", command).split("\n")) {
+        if (!success && usageMessage.length() > 0)
+        {
+            for (String line : usageMessage.replace("<command>", command).split("\n"))
+            {
                 sender.sendMessage(line);
             }
         }
@@ -164,7 +174,7 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
     public void addAliases(String... aliases)
     {
         List<String> aliasez = this.getAliases();
-        for (String alias:aliases)
+        for (String alias : aliases)
         {
             aliasez.add(alias);
         }
@@ -206,7 +216,7 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
     }
 
     /**
-     * @return          the plugin that registered the command
+     * @return the plugin that registered the command
      */
     @Override
     public Plugin getPlugin()
@@ -215,7 +225,7 @@ public abstract class SimpleCommand extends Command implements CommandExecutable
     }
 
     /**
-     * @return          the annotation object
+     * @return the annotation object
      */
     public CommandInfo getCommandInfo()
     {

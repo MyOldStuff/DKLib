@@ -4,15 +4,28 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-public class JSONLocation
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * https://github.com/desht/dhutils/blob/master/Lib/src/main/java/me/desht/dhutils/PersistableLocation.java
+ *
+ * @author desht
+ *
+ * ATTENTION:
+ * before using this class in a config you must register them before loading the config:
+ * ConfigurationSerialization.registerClass(PersistableLocation.class);
+ */
+public class PersistableLocation implements ConfigurationSerializable
 {
     private final String worldName;
     private final double x, y, z;
     private final float pitch, yaw;
     private boolean savePitchAndYaw;
 
-    public JSONLocation(Location loc)
+    public PersistableLocation(Location loc)
     {
         worldName = loc.getWorld().getName();
         x = loc.getX();
@@ -23,7 +36,18 @@ public class JSONLocation
         savePitchAndYaw = true;
     }
 
-    public JSONLocation(World world, double x, double y, double z)
+    public PersistableLocation(Map<String, Object> map)
+    {
+        worldName = (String) map.get("world");
+        x = toDouble(map.get("x"));
+        y = toDouble(map.get("y"));
+        z = toDouble(map.get("z"));
+        pitch = map.containsKey("pitch") ? ((Double) map.get("pitch")).floatValue() : 0.0f;
+        yaw = map.containsKey("yaw") ? ((Double) map.get("yaw")).floatValue() : 0.0f;
+        savePitchAndYaw = map.containsKey("pitch");
+    }
+
+    public PersistableLocation(World world, double x, double y, double z)
     {
         worldName = world.getName();
         this.x = x;
@@ -32,7 +56,7 @@ public class JSONLocation
         this.pitch = this.yaw = 0.0f;
     }
 
-    public JSONLocation(World world, int x, int y, int z)
+    public PersistableLocation(World world, int x, int y, int z)
     {
         worldName = world.getName();
         this.x = x;
@@ -105,6 +129,21 @@ public class JSONLocation
         return Bukkit.getWorld(worldName) != null;
     }
 
+    public Map<String, Object> serialize()
+    {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("world", worldName);
+        map.put("x", x);
+        map.put("y", y);
+        map.put("z", z);
+        if (savePitchAndYaw)
+        {
+            map.put("pitch", pitch);
+            map.put("yaw", yaw);
+        }
+        return map;
+    }
+
     @Override
     public int hashCode()
     {
@@ -132,7 +171,7 @@ public class JSONLocation
             return false;
         if (getClass() != obj.getClass())
             return false;
-        JSONLocation other = (JSONLocation) obj;
+        PersistableLocation other = (PersistableLocation) obj;
         if (Float.floatToIntBits(pitch) != Float.floatToIntBits(other.pitch))
             return false;
         if (worldName == null)
@@ -156,7 +195,23 @@ public class JSONLocation
     @Override
     public String toString()
     {
-        return "JSONLocation [worldName=" + worldName + ", x=" + x + ", y=" + y + ", z=" + z + ", pitch="
+        return "PersistableLocation [worldName=" + worldName + ", x=" + x + ", y=" + y + ", z=" + z + ", pitch="
                 + pitch + ", yaw=" + yaw + "]";
+    }
+
+    private double toDouble(Object val)
+    {
+        if (val instanceof Double)
+        {
+            return (Double) val;
+        }
+        else if (val instanceof Integer)
+        {
+            return ((Integer) val).doubleValue();
+        }
+        else
+        {
+            throw new IllegalArgumentException("invalid numeric value: " + val);
+        }
     }
 }

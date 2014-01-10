@@ -1,4 +1,4 @@
-package me.michidk.DKLib.MySQL;
+package me.michidk.DKLib.mySQL;
 
 import org.bukkit.Bukkit;
 
@@ -22,7 +22,7 @@ public class MySQLStats
      * init a MySQLStat connection
      * you only have to do this once
      *
-     * @param mySQLData     the mysql data with the sql connection data
+     * @param mySQLData the mysql data with the sql connection data
      */
     public MySQLStats(MySQLData mySQLData)
     {
@@ -33,10 +33,10 @@ public class MySQLStats
     /**
      * increase the stats
      *
-     * @param table     the table in which are the stats saved e.g SurvivalGamesStats
-     * @param name      the name of the object for the stats e.g. playerName
-     * @param key       the key which should be increased e.g kills
-     * @param value     the value which is add to the stats, e.g 1
+     * @param table the table in which are the stats saved e.g SurvivalGamesStats
+     * @param name  the name of the object for the stats e.g. playerName
+     * @param key   the key which should be increased e.g kills
+     * @param value the value which is add to the stats, e.g 1
      */
     public void add(String table, String name, String key, int value)
     {
@@ -72,9 +72,12 @@ public class MySQLStats
 
             //get key
             ResultSet results = ps.executeQuery();
-            if (!results.next()) {
+            if (!results.next())
+            {
                 result = 0;
-            } else {
+            }
+            else
+            {
                 result = results.getInt(1);
             }
 
@@ -97,7 +100,8 @@ public class MySQLStats
 
             //get key
             ResultSet results = ps.executeQuery();
-            if (!results.next()) {
+            if (!results.next())
+            {
 
                 //neu eintragen
                 PreparedStatement ps2 = mySQL.getConnection().prepareStatement("INSERT INTO " + table + " VALUES(?, ?);");
@@ -105,7 +109,9 @@ public class MySQLStats
                 ps2.setInt(2, value);
                 ps2.executeUpdate();
 
-            } else {
+            }
+            else
+            {
 
                 //setzen / updaten
                 PreparedStatement ps2 = mySQL.getConnection().prepareStatement("UPDATE " + table + " SET coins=? WHERE name=?;");

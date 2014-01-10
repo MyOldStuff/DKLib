@@ -30,7 +30,7 @@ public class ListenerCollection
     {
         this.plugin = plugin;
 
-        for (Listener lis:Arrays.asList(listeners))
+        for (Listener lis : Arrays.asList(listeners))
             this.listeners.add(lis);
 
         enabled = false;
@@ -38,7 +38,7 @@ public class ListenerCollection
 
     public void enable()
     {
-        for (Listener l:listeners)
+        for (Listener l : listeners)
         {
             Bukkit.getPluginManager().registerEvents(l, plugin);
         }
@@ -47,7 +47,7 @@ public class ListenerCollection
 
     public void disable()
     {
-        for (Listener l:listeners)
+        for (Listener l : listeners)
         {
             Bukkit.getPluginManager().registerEvents(l, plugin);
         }

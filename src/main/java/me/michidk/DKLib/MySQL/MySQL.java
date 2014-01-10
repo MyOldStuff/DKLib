@@ -1,4 +1,4 @@
-package me.michidk.DKLib.MySQL;
+package me.michidk.DKLib.mySQL;
 
 import org.bukkit.Bukkit;
 
@@ -8,15 +8,17 @@ import java.util.logging.Level;
 
 /**
  * Connects to and uses a MySQL database
- *
+ * <p/>
  * Modified by:
  * michidk
- *
+ * <p/>
  * Original by:
+ *
  * @author -_Husky_-
  * @author tips48
  */
-public class MySQL {
+public class MySQL
+{
 
     private MySQLData mySQLData;
     private Connection connection;
@@ -26,19 +28,26 @@ public class MySQL {
      *
      * @param mySQLData the mysql data for the connection
      */
-    public MySQL(MySQLData mySQLData) {
+    public MySQL(MySQLData mySQLData)
+    {
         this.mySQLData = mySQLData;
 
         openConnection();
     }
 
-    private Connection openConnection() {
-        try {
+    private Connection openConnection()
+    {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + mySQLData.getHostname() + ":" + mySQLData.getPort() + "/" + mySQLData.getDatabase(), mySQLData.getUser(), mySQLData.getPassword());
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             Bukkit.getLogger().log(Level.SEVERE, "Could not connect to MySQL server! because: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e)
+        {
             Bukkit.getLogger().log(Level.SEVERE, "JDBC Driver not found!");
         }
 
@@ -50,47 +59,64 @@ public class MySQL {
         return connection;
     }
 
-    public boolean checkConnection() {
+    public boolean checkConnection()
+    {
         return connection != null;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection()
+    {
         return connection;
     }
 
-    public void closeConnection() {
-        if (connection != null) {
-            try {
+    public void closeConnection()
+    {
+        if (connection != null)
+        {
+            try
+            {
                 connection.close();
-            } catch (SQLException e) {
+            }
+            catch (SQLException e)
+            {
                 Bukkit.getLogger().log(Level.SEVERE, "Error closing the MySQL Connection!");
                 e.printStackTrace();
             }
         }
     }
 
-    public ResultSet querySQL(String query) {
+    public ResultSet querySQL(String query)
+    {
         Connection c = null;
 
-        if (checkConnection()) {
+        if (checkConnection())
+        {
             c = getConnection();
-        } else {
+        }
+        else
+        {
             c = openConnection();
         }
 
         Statement s = null;
 
-        try {
+        try
+        {
             s = c.createStatement();
-        } catch (SQLException e1) {
+        }
+        catch (SQLException e1)
+        {
             e1.printStackTrace();
         }
 
         ResultSet ret = null;
 
-        try {
+        try
+        {
             ret = s.executeQuery(query);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
@@ -99,22 +125,29 @@ public class MySQL {
         return ret;
     }
 
-    public void updateSQL(String update) {
+    public void updateSQL(String update)
+    {
 
         Connection c = null;
 
-        if (checkConnection()) {
+        if (checkConnection())
+        {
             c = getConnection();
-        } else {
+        }
+        else
+        {
             c = openConnection();
         }
 
         Statement s = null;
 
-        try {
+        try
+        {
             s = c.createStatement();
             s.executeUpdate(update);
-        } catch (SQLException e1) {
+        }
+        catch (SQLException e1)
+        {
             e1.printStackTrace();
         }
 

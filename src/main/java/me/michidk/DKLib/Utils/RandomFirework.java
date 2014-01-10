@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.utils;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -23,28 +23,28 @@ public class RandomFirework
     /**
      * spawns a random firework (or only the explosion effect)
      *
-     * @param location          the location where the firework spawns
+     * @param location the location where the firework spawns
      */
     public static void spawnRandomFirework(Location location)
     {
         FireworkEffect fe = getRandomFireworkEffect();
 
-            org.bukkit.entity.Firework fw = (org.bukkit.entity.Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
-            FireworkMeta fm = fw.getFireworkMeta();
+        org.bukkit.entity.Firework fw = (org.bukkit.entity.Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
+        FireworkMeta fm = fw.getFireworkMeta();
 
-            fm.addEffect(fe);
+        fm.addEffect(fe);
 
-            int rp = r.nextInt(2) + 1;
-            fm.setPower(rp);
+        int rp = r.nextInt(2) + 1;
+        fm.setPower(rp);
 
-            fw.setFireworkMeta(fm);
+        fw.setFireworkMeta(fm);
 
     }
 
     /**
      * generates a random FireworkEffect
      *
-     * @return      random FireworkEffect
+     * @return random FireworkEffect
      */
     public static FireworkEffect getRandomFireworkEffect()
     {
@@ -56,23 +56,21 @@ public class RandomFirework
         if (rt == 1) type = FireworkEffect.Type.BALL;
         if (rt == 2) type = FireworkEffect.Type.BALL_LARGE;
         if (rt == 3) type = FireworkEffect.Type.BURST;
-        if (rt == 4) type =  FireworkEffect.Type.CREEPER;
+        if (rt == 4) type = FireworkEffect.Type.CREEPER;
 
         return FireworkEffect.builder().flicker(r.nextBoolean()).withColor(color).withFade(fade).with(type).trail(r.nextBoolean()).build();
     }
 
     /**
-     *
-     * @return      a random Color
+     * @return a random Color
      */
     public static Color getRandomColor()
     {
-        return Color.fromRGB(r.nextInt(RGB_MAX),r.nextInt(RGB_MAX),r.nextInt(RGB_MAX));
+        return Color.fromRGB(r.nextInt(RGB_MAX), r.nextInt(RGB_MAX), r.nextInt(RGB_MAX));
     }
 
     /**
-     *
-     * @return      a random predefined Color
+     * @return a random predefined Color
      */
     public static Color getRandomBukkitColor()
     {

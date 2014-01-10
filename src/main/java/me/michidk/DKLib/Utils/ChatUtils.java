@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,11 +10,12 @@ import java.util.List;
 
 /**
  * ChatUtils
- *
+ * <p/>
  * Modified by:
  * michidk
- *
+ * <p/>
  * Original by:
+ *
  * @author HeIIsing
  */
 
@@ -24,8 +25,8 @@ public class ChatUtils
     /**
      * sends a empty line to a player
      *
-     * @param player     if null the message is send to all online players
-     * @param lines      number of lines
+     * @param player if null the message is send to all online players
+     * @param lines  number of lines
      */
     public static void broadcastEmptyLines(Player player, int lines)
     {
@@ -36,7 +37,7 @@ public class ChatUtils
         else
             pList.add(player);
 
-        for (Player p:pList)
+        for (Player p : pList)
             for (int i = 0; i < lines; i++)
                 p.sendMessage("");
 
@@ -45,9 +46,8 @@ public class ChatUtils
     /**
      * send a centered message that fills the full chat window
      *
-     * @param player    if null the message is send to all online players
-     * @param message   the messages
-     *
+     * @param player  if null the message is send to all online players
+     * @param message the messages
      * @author HeIIsing
      */
     public static void broadcastCentered(Player player, String message)
@@ -59,9 +59,8 @@ public class ChatUtils
     /**
      * sends centered messages that fills the full chat window
      *
-     * @param player    if null the message is send to all online players
-     * @param message   the messages as String[]
-     *
+     * @param player  if null the message is send to all online players
+     * @param message the messages as String[]
      * @author HeIIsing
      */
     public static void broadcastCentered(Player player, String[] message)
@@ -78,21 +77,21 @@ public class ChatUtils
         {
             broadcastEmptyLines(player, (int) Math.ceil(((10 - message.length) / 2d)));
             for (String line : message)
-                for (Player p:pList)
+                for (Player p : pList)
                     p.sendMessage(line);
             broadcastEmptyLines(player, (int) Math.floor(((10 - message.length) / 2d)));
         }
         else
             for (String line : message)
-                for (Player p:pList)
+                for (Player p : pList)
                     p.sendMessage(line);
     }
 
     /**
      * replaces all color codes with chat colors
      *
-     * @param message   the message with color codes
-     * @return          the message with chat colors
+     * @param message the message with color codes
+     * @return the message with chat colors
      */
     public static String replaceColorCodes(String message)
     {
@@ -102,14 +101,13 @@ public class ChatUtils
     /**
      * remove all colors from message
      *
-     * @param message   string that contains the color codes
-     * @return          string without color codes
+     * @param message string that contains the color codes
+     * @return string without color codes
      */
     public static String removeColorCodes(String message)
     {
         return ChatColor.stripColor(message);
     }
-
 
 
 }

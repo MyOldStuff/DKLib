@@ -1,4 +1,4 @@
-package me.michidk.DKLib.Test;
+package me.michidk.DKLib.test;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

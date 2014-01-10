@@ -1,4 +1,4 @@
-package me.michidk.DKLib.Command;
+package me.michidk.DKLib.command;
 
 /**
  * Copyright by michidk

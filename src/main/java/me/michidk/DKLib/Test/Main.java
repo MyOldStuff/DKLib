@@ -1,9 +1,13 @@
-package me.michidk.DKLib.Test;
+package me.michidk.DKLib.test;
 
-import me.michidk.DKLib.Command.CommandManager;
 import me.michidk.DKLib.ListenerCollection;
+import me.michidk.DKLib.PersistableLocation;
+import me.michidk.DKLib.command.CommandManager;
+import me.michidk.DKLib.event.EventCaller;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,9 +26,14 @@ public class Main extends JavaPlugin implements Listener
     public void onEnable()
     {
 
+        ConfigurationSerialization.registerClass(PersistableLocation.class);
+
+        Bukkit.getPluginManager().registerEvents(new EventCaller(), this);
+
         //listener test
         listeners = new ListenerCollection(this, new Listener[]{new TestListener()});
         listeners.addListener(this);
+        listeners.enable();
 
         //command test
         commandManager = new CommandManager(this);
@@ -52,7 +61,6 @@ public class Main extends JavaPlugin implements Listener
         {
             listeners.enable();
         }
-
 
 
         return true;

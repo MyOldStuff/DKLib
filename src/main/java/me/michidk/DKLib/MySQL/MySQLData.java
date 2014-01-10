@@ -1,4 +1,4 @@
-package me.michidk.DKLib.MySQL;
+package me.michidk.DKLib.mySQL;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -36,7 +36,7 @@ public class MySQLData implements ConfigurationSerializable
         this.password = password;
     }
 
-    public  MySQLData(Map<String, Object> result)
+    public MySQLData(Map<String, Object> result)
     {
         this.hostname = (String) result.get("hostname");
         this.port = (String) result.get("port");
