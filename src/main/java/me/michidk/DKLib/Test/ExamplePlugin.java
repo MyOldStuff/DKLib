@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Date: 01.12.13
  * Time: 17:47
  */
-public class Main extends JavaPlugin implements Listener
+public class ExamplePlugin extends JavaPlugin implements Listener
 {
 
     ListenerCollection listeners;

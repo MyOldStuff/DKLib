@@ -1,5 +1,12 @@
-name: DKLib_Test
+name: DKLib
 version: 1.0.0
-authors: [michidk]
+description: a usefull Lib with a lot of helpfull utils
+author: michidk
+website: https://github.com/michidk/DKLib
 
-main: me.michidk.DKLib.Test.Main
+main: me.michidk.DKLib.Main
+softdepend: [ProtocolLib]
+
+commands:
+  DKLib:
+    description: test command
