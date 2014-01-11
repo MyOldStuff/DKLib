@@ -11,13 +11,13 @@ import org.bukkit.command.CommandSender;
  * Time: 14:43
  */
 
-@CommandInfo(description = "asasdasdd", usage = "test command: <command> aaa", permission = "asd", onlyIngame = true)
+@CommandInfo(description = "this is the description of the commamd", usage = "test command: <command> aaa", permission = "permm.ission", onlyIngame = true)
 public class TestCommand extends SimpleCommand
 {
 
     public TestCommand(CommandManager commandManager)
     {
-        super(commandManager, "test");
+        super(commandManager, "command");
 
         //adding more aliases
         this.addAlias("alsoAnAlias");
