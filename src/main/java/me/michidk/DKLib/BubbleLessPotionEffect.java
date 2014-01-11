@@ -21,7 +21,7 @@ import java.util.Set;
  *
  * YOU NEED PROTOCOLLIB FOR THIS CLASS!!!!
  */
-public class BubbleLessPotionEffect
+public class BubblelessPotionEffect
 {
 
     //Stores the players recently used effects
