@@ -1,5 +1,6 @@
 package me.michidk.DKLib.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,6 +26,12 @@ public class BungeeCord
      */
     public static void connect(Plugin plugin, String serverName, Player player)
     {
+        //register bungee channel if not already registered
+        if (!Bukkit.getMessenger().getOutgoingChannels(plugin).contains("BungeeCord"))
+        {
+            Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, "BungeeCord");
+        }
+
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
 

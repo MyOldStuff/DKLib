@@ -1,6 +1,7 @@
 package me.michidk.DKLib;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -49,7 +50,7 @@ public class ListenerCollection
     {
         for (Listener l : listeners)
         {
-            Bukkit.getPluginManager().registerEvents(l, plugin);
+            HandlerList.unregisterAll(l);
         }
         enabled = false;
     }
@@ -57,11 +58,16 @@ public class ListenerCollection
     public void addListener(Listener listener)
     {
         listeners.add(listener);
+        if (enabled)
+        {
+            Bukkit.getPluginManager().registerEvents(listener, plugin);
+        }
     }
 
     public void removeListener(Listener listener)
     {
         listeners.remove(listener);
+        HandlerList.unregisterAll(listener);
     }
 
     public boolean isEnabled()
