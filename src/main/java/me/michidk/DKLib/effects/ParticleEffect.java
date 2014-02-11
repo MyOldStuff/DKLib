@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
  * - use Bukkit Material instead of int for icon/tile crack effects
  */
 public enum ParticleEffect {
-
     /**
      * @appearance Huge explosions
      * @displayed by TNT and creepers
@@ -193,7 +192,7 @@ public enum ParticleEffect {
      * @appearance Green stars
      * @displayed by bone meal and when trading with a villager
      */
-    HAPPY_VILLAGER("happyVillager");
+     HAPPY_VILLAGER("happyVillager");
 
     private String name;
 
