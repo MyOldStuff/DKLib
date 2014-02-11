@@ -12,6 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * ParticleEffect
  *
+ * from https://github.com/desht/dhutils
+ *
  * This particle effect library is based on code created by DarkBlade12 based off content from microgeek
  * You are free to use it, modify it and redistribute it under the condition to give credit to me and microgeek
  * Modified by desht:

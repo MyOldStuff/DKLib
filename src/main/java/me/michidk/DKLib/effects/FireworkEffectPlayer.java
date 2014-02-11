@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 /**
  * FireworkEffectPlayer v1.0
  *
+ * from https://github.com/desht/dhutils
+ *
  * FireworkEffectPlayer provides a thread-safe and (reasonably) version independant way to instantly explode a FireworkEffect at a given location.
  * You are welcome to use, redistribute, modify and destroy your own copies of this source with the following conditions:
  *
