@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.effects;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
