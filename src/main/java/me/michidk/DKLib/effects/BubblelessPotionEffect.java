@@ -1,4 +1,4 @@
-package me.michidk.DKLib;
+package me.michidk.DKLib.effects;
 
 import com.comphenix.packetwrapper.Packet29EntityEffect;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -28,7 +28,7 @@ public class BubblelessPotionEffect
     private Set<Integer> playersBuffs = new HashSet<Integer>();
 
     //Adds the potion effect without the graphical bubbles
-    public void addPotionEffectNoGraphic(Player p, PotionEffect pe)
+    public void addBubblelessPotionEffect(Player p, PotionEffect pe)
     {
         playersBuffs.add(pe.getType().getId());
 
@@ -49,7 +49,7 @@ public class BubblelessPotionEffect
     }
 
     //Remove the potion effect
-    public void removePotionEffectNoGraphic(Player p, PotionEffectType pe)
+    public void removeBubblelessPotionEffect(Player p, PotionEffectType pe)
     {
         playersBuffs.remove(pe.getId());
 
@@ -68,17 +68,17 @@ public class BubblelessPotionEffect
     }
 
     //Removes all of the players stored potion effects
-    public void removeAllPotionEffectsNoGrapic(Player p)
+    public void removeAllBubblelessPotionEffect(Player p)
     {
         for (Integer i : playersBuffs)
         {
-            removePotionEffectNoGraphic(p, PotionEffectType.getById(i));
+            removeBubblelessPotionEffect(p, PotionEffectType.getById(i));
             playersBuffs.remove(i);
         }
     }
 
     //Checks if a player has a certain potion effect
-    public boolean hasEffectNoGraphic(PotionEffectType pet)
+    public boolean hasBubblelessPotionEffect(PotionEffectType pet)
     {
         if (playersBuffs.contains(pet.getId()))
         {
