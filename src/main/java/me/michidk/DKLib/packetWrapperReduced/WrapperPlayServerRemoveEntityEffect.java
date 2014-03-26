@@ -20,7 +20,6 @@ package me.michidk.DKLib.packetWrapperReduced;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import me.michidk.DKLib.packetWrapperReduced.AbstractPacket;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.potion.PotionEffectType;

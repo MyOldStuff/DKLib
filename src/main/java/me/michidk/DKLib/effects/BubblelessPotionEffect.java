@@ -1,8 +1,7 @@
 package me.michidk.DKLib.effects;
 
-import com.comphenix.packetwrapper.Packet29EntityEffect;
+import me.michidk.DKLib.packetWrapperReduced.WrapperPlayServerEntityEffect;
 import com.comphenix.protocol.ProtocolLibrary;
-import me.michidk.DKLib.packetWrapperReduced.Packet2ARemoveEntityEffect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -32,7 +31,7 @@ public class BubblelessPotionEffect
     {
         playersBuffs.add(pe.getType().getId());
 
-        Packet29EntityEffect packet = new Packet29EntityEffect();
+        WrapperPlayServerEntityEffect packet = new WrapperPlayServerEntityEffect();
         packet.setEntityId(p.getEntityId());
         packet.setEffect(pe.getType());
         packet.setAmplifier((byte) pe.getAmplifier());
@@ -53,7 +52,7 @@ public class BubblelessPotionEffect
     {
         playersBuffs.remove(pe.getId());
 
-        Packet2ARemoveEntityEffect packet = new Packet2ARemoveEntityEffect();
+        WrapperPlayServerEntityEffect packet = new WrapperPlayServerEntityEffect();
         packet.setEntityId(p.getEntityId());
         packet.setEffect(pe);
 
