@@ -2,41 +2,41 @@
  *  PacketWrapper - Contains wrappers for each packet in Minecraft.
  *  Copyright (C) 2012 Kristian S. Stangeland
  *
- *  This program is free software; you can redistribute it and/or modify it under the terms of the 
- *  GNU Lesser General Public License as published by the Free Software Foundation; either version 2 of 
+ *  This program is free software; you can redistribute it and/or modify it under the terms of the
+ *  GNU Lesser General Public License as published by the Free Software Foundation; either version 2 of
  *  the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
- *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along with this program; 
- *  if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 
+ *  You should have received a copy of the GNU General Public License along with this program;
+ *  if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  *  02111-1307 USA
  */
 
-package com.comphenix.packetwrapper;
+package me.michidk.DKLib.packetWrapperReduced;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import me.michidk.DKLib.packetWrapperReduced.AbstractPacket;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.potion.PotionEffectType;
 
-public class Packet29EntityEffect extends AbstractPacket
+public class WrapperPlayServerEntityEffect extends AbstractPacket
 {
-    public static final int ID = 41;
+    public static final PacketType TYPE = PacketType.Play.Server.ENTITY_EFFECT;
 
-    public Packet29EntityEffect()
+    public WrapperPlayServerEntityEffect()
     {
-        super(new PacketContainer(ID), ID);
+        super(new PacketContainer(TYPE), TYPE);
         handle.getModifier().writeDefaults();
     }
 
-    public Packet29EntityEffect(PacketContainer packet)
+    public WrapperPlayServerEntityEffect(PacketContainer packet)
     {
-        super(packet, ID);
+        super(packet, TYPE);
     }
 
     /**
@@ -161,5 +161,3 @@ public class Packet29EntityEffect extends AbstractPacket
         handle.getShorts().write(0, value);
     }
 }
-
-
