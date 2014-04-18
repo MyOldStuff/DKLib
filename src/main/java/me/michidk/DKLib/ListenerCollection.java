@@ -3,7 +3,7 @@ package me.michidk.DKLib;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -17,17 +17,17 @@ import java.util.Set;
 public class ListenerCollection
 {
 
-    private Plugin plugin;
+    private JavaPlugin plugin;
     private Set<Listener> listeners = new HashSet<>();
     private boolean enabled;
 
-    public ListenerCollection(Plugin plugin)
+    public ListenerCollection(JavaPlugin plugin)
     {
         this.plugin = plugin;
         enabled = false;
     }
 
-    public ListenerCollection(Plugin plugin, Listener[] listeners)
+    public ListenerCollection(JavaPlugin plugin, Listener[] listeners)
     {
         this.plugin = plugin;
 
