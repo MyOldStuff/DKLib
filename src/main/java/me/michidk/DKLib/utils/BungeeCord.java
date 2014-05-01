@@ -45,7 +45,7 @@ public class BungeeCord
             e.printStackTrace();
         }
 
-        player.sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
+        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 
 }
