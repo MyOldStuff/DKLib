@@ -47,7 +47,7 @@ public class PlayerUtil
                     //This player plays on the server!
                     MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
                     EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), new GameProfile(null, playername), new PlayerInteractManager(server.getWorldServer(0)));
-                    Player target = (entity == null) ? null : (Player) entity.getBukkitEntity();
+                    Player target = entity.getBukkitEntity();
                     if (target != null)
                     {
                         target.loadData();

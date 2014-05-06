@@ -10,7 +10,7 @@ public class JSONLocation
     private final String worldName;
     private final double x, y, z;
     private final float pitch, yaw;
-    private boolean savePitchAndYaw;
+    private transient boolean savePitchAndYaw;
 
     public JSONLocation(Location loc)
     {
