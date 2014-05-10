@@ -7,25 +7,28 @@ import org.bukkit.block.Block;
 
 public class JSONLocation
 {
-    private final String worldName;
-    private final double x, y, z;
-    private final float pitch, yaw;
-    private boolean savePitchAndYaw;
+    private String worldName = "";
+    private double x = 0, y  = 0, z = 0;
+    private float pitch = 0, yaw = 0;
+
+    public JSONLocation()
+    {
+
+    }
 
     public JSONLocation(Location loc)
     {
-        worldName = loc.getWorld().getName();
-        x = loc.getX();
-        y = loc.getY();
-        z = loc.getZ();
-        pitch = loc.getPitch();
-        yaw = loc.getYaw();
-        savePitchAndYaw = true;
+        this.worldName = loc.getWorld().getName();
+        this.x = loc.getX();
+        this.y = loc.getY();
+        this.z = loc.getZ();
+        this.pitch = loc.getPitch();
+        this.yaw = loc.getYaw();
     }
 
     public JSONLocation(World world, double x, double y, double z)
     {
-        worldName = world.getName();
+        this.worldName = world.getName();
         this.x = x;
         this.y = y;
         this.z = z;
@@ -34,7 +37,7 @@ public class JSONLocation
 
     public JSONLocation(World world, int x, int y, int z)
     {
-        worldName = world.getName();
+        this.worldName = world.getName();
         this.x = x;
         this.y = y;
         this.z = z;
@@ -69,16 +72,6 @@ public class JSONLocation
     public float getYaw()
     {
         return yaw;
-    }
-
-    public boolean isSavePitchAndYaw()
-    {
-        return savePitchAndYaw;
-    }
-
-    public void setSavePitchAndYaw(boolean savePitchAndYaw)
-    {
-        this.savePitchAndYaw = savePitchAndYaw;
     }
 
     public Location getLocation()
