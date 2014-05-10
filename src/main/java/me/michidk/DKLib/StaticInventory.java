@@ -45,7 +45,7 @@ public class StaticInventory implements Listener
 
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
-        this.defaultInventory = this.defaultInventory;
+        this.defaultInventory = defaultInventory;
 
         for (Player p: Bukkit.getOnlinePlayers())
         {

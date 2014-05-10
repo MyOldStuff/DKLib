@@ -29,7 +29,7 @@ public class LocationUtil
      * @param sphere - if true the vectors a spherelike
      * @return - a list of vectors
      */
-    public static List<Vector> getCircleVectors(Vector vector, Integer radius, Integer hight, Boolean hollow, Boolean sphere)
+    public static List<Vector> getCircleVectors(Vector vector, int radius, int hight, boolean hollow, boolean sphere)
     {
         List<Vector> vectors = new ArrayList<Vector>();
         int cx = vector.getBlockX();

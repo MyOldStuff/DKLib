@@ -90,7 +90,7 @@ public class BlockLocation
      */
     public static BlockLocation fromBlock(Block block)
     {
-        return new BlockLocation().fromLocation(block.getLocation());
+        return BlockLocation.fromLocation(block.getLocation());
     }
 
     public int getX()
@@ -124,5 +124,29 @@ public class BlockLocation
     public World getWorld()
     {
         return Bukkit.getWorld(getWorldName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BlockLocation that = (BlockLocation) o;
+
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        if (z != that.z) return false;
+        if (!world.equals(that.world)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        result = 31 * result + z;
+        result = 31 * result + world.hashCode();
+        return result;
     }
 }
