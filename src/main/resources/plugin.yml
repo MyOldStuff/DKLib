@@ -6,7 +6,3 @@ website: https://github.com/michidk/DKLib
 
 main: me.michidk.DKLib.Main
 softdepend: [ProtocolLib]
-
-commands:
-  DKLib:
-    description: test command

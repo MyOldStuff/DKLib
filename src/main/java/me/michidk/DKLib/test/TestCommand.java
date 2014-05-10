@@ -33,7 +33,7 @@ public class TestCommand extends SimpleCommand
         sender.sendMessage("YEEAYY §4 IT WORKS!");
 
 
-        return false;
+        return true;
 
     }
 
