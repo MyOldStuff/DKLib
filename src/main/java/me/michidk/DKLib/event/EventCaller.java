@@ -20,15 +20,10 @@ public class EventCaller implements Listener
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getFrom().getBlockX() != event.getTo().getBlockX() || event.getFrom().getBlockY() != event.getTo().getBlockY()
-                || event.getFrom().getBlockZ() != event.getTo().getBlockZ())
-        {
-            // Players block location changed
-            PlayerBlockMoveEvent moveEvent = new PlayerBlockMoveEvent(event.getPlayer(), event.getFrom(), event.getTo());
-            Bukkit.getPluginManager().callEvent(moveEvent);
-
-            // Cancel the move events depending on the result
-            event.setCancelled(moveEvent.isCancelled());
+        if((event.getFrom().getBlockX() != event.getTo().getBlockX()) || (event.getFrom().getBlockY() != event.getTo().getBlockY()) || (event.getFrom().getBlockZ() != event.getTo().getBlockZ())){
+            PlayerBlockMoveEvent call = new PlayerBlockMoveEvent(event.getPlayer(), event.getFrom(), event.getTo());
+            Bukkit.getPluginManager().callEvent(call);
+            event.setCancelled(call.isCancelled());
         }
     }
 
