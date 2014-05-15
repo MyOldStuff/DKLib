@@ -25,7 +25,6 @@ public class EventCaller implements Listener
         {
             PlayerBlockMoveEvent call = new PlayerBlockMoveEvent(event.getPlayer(), event.getFrom(), event.getTo());
             Bukkit.getPluginManager().callEvent(call);
-            Bukkit.broadcastMessage("iscanceled: " + call.isCancelled());
             if (call.isCancelled()) event.getPlayer().teleport(event.getFrom());
         }
 
