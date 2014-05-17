@@ -2,12 +2,21 @@
 ## General
 #################
 
-/target
+.classpath
+.project
+.settings/
 target/
+/target
 .gitattributes
-.gitignore
-DKLib.iml
+*.iml
+*.idea
+*.ida
+/idea
+idea/
+/ida
+ida/
 dependency-reduced-pom.xml
+pom.xml
 
 #################
 ## Eclipse
@@ -140,7 +149,6 @@ publish/
 *.pubxml
 
 # NuGet Packages Directory
-## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 #packages/
 
 # Windows Azure Build Output
