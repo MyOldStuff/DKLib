@@ -17,15 +17,15 @@
 
 package me.michidk.DKLib.packetWrapperReduced;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.potion.PotionEffectType;
 
-public class WrapperPlayServerRemoveEntityEffect extends AbstractPacket
-{
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+
+public class WrapperPlayServerRemoveEntityEffect extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.REMOVE_ENTITY_EFFECT;
 
     public WrapperPlayServerRemoveEntityEffect() {
@@ -91,6 +91,7 @@ public class WrapperPlayServerRemoveEntityEffect extends AbstractPacket
      * Retrieve the effect.
      * @return The current effect
      */
+    @SuppressWarnings("deprecation")
     public PotionEffectType getEffect() {
         return PotionEffectType.getById(getEffectId());
     }
@@ -99,6 +100,7 @@ public class WrapperPlayServerRemoveEntityEffect extends AbstractPacket
      * Set the effect id.
      * @param value - new value.
      */
+    @SuppressWarnings("deprecation")
     public void setEffect(PotionEffectType value) {
         setEffectId((byte) value.getId());
     }
