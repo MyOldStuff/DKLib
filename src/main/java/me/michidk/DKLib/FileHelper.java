@@ -1,13 +1,37 @@
 package me.michidk.DKLib;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 
 /**
  * @author michidk
+ * improved and extended by lorenzop
  */
 
 public class FileHelper
 {
+
+    public static String decodeBase64(File file)
+    {
+        FileInputStream fis = null;
+        try
+        {
+            fis = new FileInputStream(file);
+            byte[] imageBytes = new byte[(int)file.length()];
+            fis.read(imageBytes);
+            fis.close();
+            return DatatypeConverter.printBase64Binary(imageBytes);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public static void stringToFile(File file, String string)
@@ -42,7 +66,7 @@ public class FileHelper
         String line;
         StringBuilder stringBuilder = new StringBuilder();
 
-        BufferedReader reader;
+        BufferedReader reader = null;
         try
         {
             reader = new BufferedReader(new FileReader(file));
@@ -56,9 +80,23 @@ public class FileHelper
         {
             e.printStackTrace();
         }
+        finally
+        {
+            try
+            {
+                if (reader != null) {
+                    reader.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
 
         return stringBuilder.toString();
     }
 
-}
 
+
+}
