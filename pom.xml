@@ -18,12 +18,6 @@
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
 
-        <repository>
-            <id>comphenix-rep</id>
-            <name>Comphenix Repository</name>
-            <url>http://repo.comphenix.net/content/groups/public</url>
-        </repository>
-
     </repositories>
 
 
@@ -33,13 +27,6 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.7.9-R0.2-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>3.3.1</version>
             <scope>provided</scope>
         </dependency>
 
