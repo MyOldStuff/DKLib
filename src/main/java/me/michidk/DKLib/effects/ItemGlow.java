@@ -1,60 +1,39 @@
 package me.michidk.DKLib.effects;
 
+import me.michidk.DKLib.Main;
+import me.michidk.DKLib.libs.protocol.PacketType;
+import me.michidk.DKLib.libs.protocol.ReflectionUtil;
+import me.michidk.DKLib.libs.protocol.event.PacketEvent;
+import me.michidk.DKLib.libs.protocol.event.PacketListener;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
-import com.comphenix.protocol.Packets;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ConnectionSide;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.comphenix.protocol.wrappers.nbt.NbtFactory;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-/**
- * from https://github.com/desht/dhutils
- *
- * Use ProtocolLib to add a glow to unenchanted items.  With thanks to Comphenix; see
- * https://gist.github.com/aadnk/4580551
- */
-public class ItemGlow {
-    private static boolean inited = false;
+public class ItemGlow implements PacketListener{
+
+    private Class<?>  itemArray = Array.newInstance(ReflectionUtil.getMinecraftClass("ItemStack"), 0).getClass();
+    private Class<?> nbtTagCompound = ReflectionUtil.getMinecraftClass("NBTTagCompound");
+    private Class<?> nbtTagList = ReflectionUtil.getMinecraftClass("NBTTagList");
+    private Field nbtField = ReflectionUtil.getField(ReflectionUtil.getMinecraftClass("ItemStack"), "tag");
+    private Method setMethod = ReflectionUtil.getMethod(nbtTagCompound, "set");
+    private Method asBukkitCopy = ReflectionUtil.getMethod(ReflectionUtil.getCraftBukkitClass("inventory.CraftItemStack"), "asBukkitCopy");
 
     private static final Enchantment GLOW_FLAG = Enchantment.SILK_TOUCH;
     private static final int GLOW_FLAG_LEVEL = 32;
 
-    /**
-     * Initialise the ItemGlow system.
-     *
-     * @param plugin the plugin instance
-     */
-    public static void init(Plugin plugin) {
-        PacketAdapter adapter = new PacketAdapter(plugin, ConnectionSide.SERVER_SIDE, ListenerPriority.HIGH, Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                if (event.getPacketID() == Packets.Server.SET_SLOT) {
-                    addGlow(new ItemStack[] { event.getPacket().getItemModifier().read(0) });
-                } else {
-                    addGlow(event.getPacket().getItemArrayModifier().read(0));
-                }
-            }
-        };
-        ProtocolLibrary.getProtocolManager().addPacketListener(adapter);
-        inited = true;
+    //prevents instantiation
+    private ItemGlow(){
+
     }
 
-    /**
-     * Set the glowing status of an item stack.
-     *
-     * @param stack the item stack to modify
-     * @param glowing true to make the item glow, false to stop it glowing
-     */
+    static {
+        Main.getProtocolManager().registerListener(new ItemGlow(), PacketType.Server.WINDOW_ITEMS, PacketType.Server.SET_SLOT);
+    }
+
     public static void setGlowing(ItemStack stack, boolean glowing) {
-        if (!inited) {
-            throw new IllegalStateException("ItemGlow system has not been initialised.  Call ItemGlow.init(plugin) first.");
-        }
         if (glowing) {
             // if the item already has a real enchantment, let's not overwrite it!
             if (!stack.getItemMeta().hasEnchant(GLOW_FLAG)) {
@@ -65,15 +44,34 @@ public class ItemGlow {
         }
     }
 
-    private static void addGlow(ItemStack[] stacks) {
-        for (ItemStack stack : stacks) {
-            if (stack != null) {
-                // Only update those stacks that have our flag enchantment
-                if (stack.getEnchantmentLevel(GLOW_FLAG) == 32) {
-                    NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(stack);
-                    compound.put(NbtFactory.ofList("ench"));
+    @Override
+    public void onPacket(PacketEvent event) {
+        if(event.getPacket().getPacketType() == PacketType.Server.WINDOW_ITEMS){
+            addGlow((Object[]) event.getPacket().getObject(itemArray, 0));
+        } else if(event.getPacket().getPacketType() == PacketType.Server.SET_SLOT){
+            addGlow(new Object[]{event.getPacket().getObject(ReflectionUtil.getMinecraftClass("ItemStack"), 0)});
+        }
+    }
+
+    private void addGlow(Object[] items) {
+        try{
+            for(Object item: items){
+                ItemStack stack = (ItemStack) asBukkitCopy.invoke(null, item);
+                if(stack.getEnchantmentLevel(Enchantment.SILK_TOUCH) == 32){
+                    try{
+                        Object compound = nbtField.get(item);
+                        if(compound == null){
+                            compound = nbtTagCompound.newInstance();
+                            nbtField.set(item, compound);
+                        }
+                        setMethod.invoke(compound, "ench", nbtTagList.newInstance());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

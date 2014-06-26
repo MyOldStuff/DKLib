@@ -1,11 +1,14 @@
 package me.michidk.DKLib.effects;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
+import me.michidk.DKLib.Main;
+import me.michidk.DKLib.libs.protocol.PacketType;
+import me.michidk.DKLib.libs.protocol.ReflectionUtil;
+import me.michidk.DKLib.libs.protocol.event.ProtocolPacket;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,7 +24,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -289,14 +291,13 @@ public class ItemMessage {
         }
 
         private void sendItemSlotChange(Player player, int slot, ItemStack stack) {
-            PacketContainer setSlot = new PacketContainer(103);
-            // int field 0: window id (0 = player inventory)
-            // int field 1: slot number (36 - 44 for player hotbar)
-            setSlot.getIntegers().write(0, 0).write(1, slot + 36);
-            setSlot.getItemModifier().write(0, stack);
             try {
-                ProtocolLibrary.getProtocolManager().sendServerPacket(player, setSlot);
-            } catch (InvocationTargetException e) {
+                ProtocolPacket packet = new ProtocolPacket(PacketType.Server.SET_SLOT);
+                packet.setInt(0, 0);
+                packet.setInt(1, slot + 36);
+                packet.setObject(ReflectionUtil.getMinecraftClass("ItemStack"), 0, CraftItemStack.asCraftCopy(stack));
+                Main.getProtocolManager().sendPacket(packet.getHandle(), player);
+            } catch (Exception e){
                 e.printStackTrace();
             }
         }

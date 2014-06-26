@@ -1,6 +1,7 @@
 package me.michidk.DKLib;
 
 import me.michidk.DKLib.event.EventCaller;
+import me.michidk.DKLib.libs.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,11 +11,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin
 {
+    private static Main instance;
+    private ProtocolManager protocolManager;
 
     @Override
     public void onEnable()
     {
+        instance = this;
+
         Bukkit.getPluginManager().registerEvents(new EventCaller(), this);
+        this.protocolManager = new ProtocolManager(this);
     }
 
     @Override
@@ -23,5 +29,7 @@ public class Main extends JavaPlugin
 
     }
 
-
+    public static ProtocolManager getProtocolManager(){
+        return instance.protocolManager;
+    }
 }
