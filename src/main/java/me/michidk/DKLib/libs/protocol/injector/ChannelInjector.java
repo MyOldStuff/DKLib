@@ -23,7 +23,7 @@ public class ChannelInjector implements Listener{
 	private static final Field getNetworkManager = ReflectionUtil.getField(ReflectionUtil.getMinecraftClass("PlayerConnection"), "networkManager");
 	private static final Field getChannel = ReflectionUtil.getFieldByType(ReflectionUtil.getMinecraftClass("NetworkManager"), Channel.class);
 	
-	private static final String handlerName = "protocol_handler";
+	private static final String handlerName = "dk_protocol_handler";
 	
 	private PacketController packetController;
 	
