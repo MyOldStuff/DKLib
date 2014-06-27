@@ -1,6 +1,6 @@
 package me.michidk.DKLib.effects;
 
-import me.michidk.DKLib.Main;
+import me.michidk.DKLib.DKLib;
 import me.michidk.DKLib.libs.protocol.PacketType;
 import me.michidk.DKLib.libs.protocol.event.ProtocolPacket;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class BubblelessPotionEffect
             } else {
                 packet.setShort(0, (short) pe.getDuration());
             }
-            Main.getProtocolManager().sendPacket(packet.getHandle(), p);
+            DKLib.getProtocolManager().sendPacket(packet.getHandle(), p);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class BubblelessPotionEffect
             ProtocolPacket packet = new ProtocolPacket(PacketType.Server.ENTITY_EFFECT);
             packet.setInt(0, p.getEntityId());
             packet.setByte(0, (byte) (pe.getId() & 0xFF));
-            Main.getProtocolManager().sendPacket(packet.getHandle(), p);
+            DKLib.getProtocolManager().sendPacket(packet.getHandle(), p);
         } catch (Exception e){
             e.printStackTrace();
         }

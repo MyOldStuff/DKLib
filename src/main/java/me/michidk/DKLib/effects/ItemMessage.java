@@ -1,6 +1,6 @@
 package me.michidk.DKLib.effects;
 
-import me.michidk.DKLib.Main;
+import me.michidk.DKLib.DKLib;
 import me.michidk.DKLib.libs.protocol.PacketType;
 import me.michidk.DKLib.libs.protocol.ReflectionUtil;
 import me.michidk.DKLib.libs.protocol.event.ProtocolPacket;
@@ -296,7 +296,7 @@ public class ItemMessage {
                 packet.setInt(0, 0);
                 packet.setInt(1, slot + 36);
                 packet.setObject(ReflectionUtil.getMinecraftClass("ItemStack"), 0, CraftItemStack.asCraftCopy(stack));
-                Main.getProtocolManager().sendPacket(packet.getHandle(), player);
+                DKLib.getProtocolManager().sendPacket(packet.getHandle(), player);
             } catch (Exception e){
                 e.printStackTrace();
             }

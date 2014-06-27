@@ -1,6 +1,6 @@
 package me.michidk.DKLib.effects;
 
-import me.michidk.DKLib.Main;
+import me.michidk.DKLib.DKLib;
 import me.michidk.DKLib.libs.protocol.PacketType;
 import me.michidk.DKLib.libs.protocol.ReflectionUtil;
 import me.michidk.DKLib.libs.protocol.event.PacketEvent;
@@ -30,7 +30,7 @@ public class ItemGlow implements PacketListener{
     }
 
     static {
-        Main.getProtocolManager().registerListener(new ItemGlow(), PacketType.Server.WINDOW_ITEMS, PacketType.Server.SET_SLOT);
+        DKLib.getProtocolManager().registerListener(new ItemGlow(), PacketType.Server.WINDOW_ITEMS, PacketType.Server.SET_SLOT);
     }
 
     public static void setGlowing(ItemStack stack, boolean glowing) {
