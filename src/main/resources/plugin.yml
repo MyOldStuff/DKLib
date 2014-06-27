@@ -4,4 +4,4 @@ description: a usefull lib with a lot of helpfull utils
 author: michidk
 website: https://github.com/michidk/DKLib
 
-main: me.michidk.DKLib.Main
+main: me.michidk.DKLib.DKLib

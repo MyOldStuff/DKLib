@@ -1,6 +1,6 @@
 package me.michidk.DKLib.effects;
 
-import me.michidk.DKLib.Main;
+import me.michidk.DKLib.DKLib;
 import me.michidk.DKLib.libs.protocol.PacketType;
 import me.michidk.DKLib.libs.protocol.event.ProtocolPacket;
 import org.bukkit.Location;
@@ -183,6 +183,6 @@ public enum ParticleEffect {
     }
 
     private static void sendPacket(Player p, ProtocolPacket packet) {
-        Main.getProtocolManager().sendPacket(packet.getHandle(), p);
+        DKLib.getProtocolManager().sendPacket(packet.getHandle(), p);
     }
 }

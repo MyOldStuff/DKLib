@@ -9,9 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author michidk
  */
 
-public class Main extends JavaPlugin
+public class DKLib extends JavaPlugin
 {
-    private static Main instance;
+    private static DKLib instance;
     private ProtocolManager protocolManager;
 
     @Override
