@@ -71,6 +71,11 @@ public class BlockLocation
         return toBlock().getLocation();
     }
 
+    public Location toCenteredLocation()
+    {
+        return toLocation().add(0.5, 0, 0.5);
+    }
+
     /**
      * create a new BlockLocation from a existing location
      *
