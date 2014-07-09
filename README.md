@@ -1,7 +1,7 @@
 DKLib
 =====
 
-Description and usage here:
+Description, usage and download here:
 http://dev.bukkit.org/bukkit-plugins/dklib/
 
 
