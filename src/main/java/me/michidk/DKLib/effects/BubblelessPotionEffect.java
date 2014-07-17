@@ -30,7 +30,7 @@ public class BubblelessPotionEffect
             } else {
                 packet.setShort(0, (short) pe.getDuration());
             }
-            DKLib.getProtocolManager().sendPacket(packet.getHandle(), p);
+            DKLib.getProtocolManager().sendPacket(packet.getHandle());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -40,9 +40,9 @@ public class BubblelessPotionEffect
     public static void removeBubblelessPotionEffect(Player p, PotionEffectType pe)
     {
         try {
-            ProtocolPacket packet = new ProtocolPacket(PacketType.Server.ENTITY_EFFECT);
+            ProtocolPacket packet = new ProtocolPacket(PacketType.Server.REMOVE_ENTITY_EFFECT);
             packet.setInt(0, p.getEntityId());
-            packet.setByte(0, (byte) (pe.getId() & 0xFF));
+            packet.setInt(1, pe.getId());
             DKLib.getProtocolManager().sendPacket(packet.getHandle(), p);
         } catch (Exception e){
             e.printStackTrace();
