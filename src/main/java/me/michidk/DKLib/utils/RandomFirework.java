@@ -51,8 +51,20 @@ public class RandomFirework
         Color color = getRandomBukkitColor();
         Color fade = getRandomBukkitColor();
 
-        int rt = r.nextInt(3) + 1;
-        FireworkEffect.Type type = FireworkEffect.Type.BALL;
+        int rt = r.nextInt(4) + 1;
+        FireworkEffect.Type type;
+        switch (rt){
+            case 2: type = FireworkEffect.Type.BALL_LARGE;
+                break;
+            case 3: type = FireworkEffect.Type.BURST;
+                break;
+            case 4: type = FireworkEffect.Type.CREEPER;
+                break;
+            case 5: type = FireworkEffect.Type.STAR;
+                break;
+            default:
+                type = FireworkEffect.Type.BALL;
+        }
         if (rt == 1) type = FireworkEffect.Type.BALL;
         if (rt == 2) type = FireworkEffect.Type.BALL_LARGE;
         if (rt == 3) type = FireworkEffect.Type.BURST;
@@ -74,46 +86,45 @@ public class RandomFirework
      */
     public static Color getRandomBukkitColor()
     {
-        Color c = Color.AQUA;
         int rt = r.nextInt(16);
         switch (rt)
         {
             case 0:
-                c = Color.WHITE;
+                return Color.WHITE;
             case 1:
-                c = Color.SILVER;
+                return Color.SILVER;
             case 2:
-                c = Color.GRAY;
+                return Color.GRAY;
             case 3:
-                c = Color.BLACK;
+                return Color.BLACK;
             case 4:
-                c = Color.RED;
+                return Color.RED;
             case 5:
-                c = Color.MAROON;
+                return Color.MAROON;
             case 6:
-                c = Color.YELLOW;
+                return Color.YELLOW;
             case 7:
-                c = Color.OLIVE;
+                return Color.OLIVE;
             case 8:
-                c = Color.LIME;
+                return Color.LIME;
             case 9:
-                c = Color.GREEN;
+                return Color.GREEN;
             case 10:
-                c = Color.AQUA;
+                return Color.AQUA;
             case 11:
-                c = Color.TEAL;
+                return Color.TEAL;
             case 12:
-                c = Color.BLUE;
+                return Color.BLUE;
             case 13:
-                c = Color.NAVY;
+                return Color.NAVY;
             case 14:
-                c = Color.FUCHSIA;
+                return Color.FUCHSIA;
             case 15:
-                c = Color.PURPLE;
+                return Color.PURPLE;
             case 16:
-                c = Color.ORANGE;
+                return Color.ORANGE;
+            default:
+                return Color.AQUA;
         }
-
-        return c;
     }
 }
