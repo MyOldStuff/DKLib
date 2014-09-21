@@ -88,7 +88,7 @@
                         <configuration>
                             <target>
                                 <copy file="target/${artifactId}-${version}.jar"
-                                      tofile="C:\Users\ml\Documents\Bukkit\server\bukkit\plugins\${artifactId}.jar" />
+                                      tofile="C:\Users\ml\Documents\Bukkit\server\bukkit\plugins\${artifactId}.jar"/>
                             </target>
                         </configuration>
                     </execution>
