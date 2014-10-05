@@ -140,7 +140,6 @@ public abstract interface PacketType {
 		CLOSE_WINDOW("PacketPlayOutCloseWindow", 101),
 		SET_SLOT("PacketPlayOutSetSlot", 103),
 		WINDOW_ITEMS("PacketPlayOutWindowItems", 104),
-		CRAFT_PROGRESS_BAR("PacketPlayOutCraftProgressBar", 105),
 		TRANSACTION("PacketPlayOutTransaction", 106),
 		UPDATE_SIGN("PacketPlayOutUpdateSign", 130),
 		MAP("PacketPlayOutMap", 131),
