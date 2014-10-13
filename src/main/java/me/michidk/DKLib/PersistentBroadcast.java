@@ -53,12 +53,23 @@ public class PersistentBroadcast implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
+        //check if the sender is a blocked player
         if (players.contains(e.getPlayer())) {
             e.setCancelled(true);
+        }
+
+        //check if one of the reciepents is a blocked player
+        for (Player p:players) {
+            if (e.getRecipients().contains(p)) {
+                e.setCancelled(true);
+            }
         }
     }
 
     public void end() {
+        for (Player p:players) {
+            players.remove(p);
+        }
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTask(schedulerID);
     }
